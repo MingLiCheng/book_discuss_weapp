@@ -6,11 +6,11 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
-		"nodeModules": true
+		"nodeModules": true,
+		"autoAudits": false
 	},
 	"miniprogramRoot": "dist/wx/",
-	"qcloudRoot":"./server",
+	"qcloudRoot": "server/",
 	"compileType": "miniprogram",
 	"appid": "wx39e0a63b277cce56",
 	"projectname": "book_discuss",
