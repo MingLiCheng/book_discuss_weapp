@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/home/main",
+    "pages/comment/main",
+    "pages/shop/main",
+    "pages/me/main",
+    "pages/logs/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#EA5149",
+    "navigationBarTitleText": "图书",
+    "navigationBarTextStyle": "light"
+  },
+ "tabBar": {
+   "color": "#a9b7b7",
+   "selectedColor": "#EA5149",
+   "borderStyle": "black",
+   "list": [{
+       "selectedIconPath": "./static/images/index/book-active.png",
+       "iconPath": "./static/images/index/book.png",
+       "pagePath": "pages/home/main",
+       "text": "首页"
+     },
+     {
+       "selectedIconPath": "./static/images/index/comment-active.png",
+       "iconPath": "./static/images/index/comment.png",
+       "pagePath": "pages/comment/main",
+       "text": "消息"
+     },
+     {
+       "selectedIconPath": "./static/images/index/shop-active.png",
+       "iconPath": "./static/images/index/shop.png",
+       "pagePath": "pages/shop/main",
+       "text": "商城"
+     },
+     {
+       "selectedIconPath": "./static/images/index/me-active.png",
+       "iconPath": "./static/images/index/me.png",
+       "pagePath": "pages/me/main",
+       "text": "我的"
+     }
+   ]
+ }
+}
