@@ -17,6 +17,10 @@ export default {
     this.userInfo = wx.getStorageSync('userinfo')
     console.log('me-userinfo', this.userInfo)
   },
+  mounted() {
+    console.log('mounted')
+     this.userInfo = wx.getStorageSync('userinfo')
+  },
 }
 </script>
 <style lang="less" scoped>

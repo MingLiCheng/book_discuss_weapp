@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>这是首页</h1>
-    <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">获取用户信息</button>
+    <button v-show="!isLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">请登录</button>
   </div>
 </template>
 <script>
@@ -9,13 +9,26 @@ import qcloud from 'wafer2-client-sdk'
 import config from '../../config.js'
 import * as Api from '../../utils/request.js'
 export default {
+  data() {
+    return {
+      isLogin: false
+    }
+  },
   created() {
-    console.log('test')
     Api.getRequest('/test').then(res => {
-      console.log('res', res)
-      console.log('xxx')
+      console.log('远程接口 is running', res)
     })
-    console.log('xxxxxxx')
+    // 判断用户是否的相关缓存
+    if(wx.getStorageSync('userinfo')){
+      // 发生过授权
+      this.isLogin = true
+      // wx.switchTab({
+      //   url: '/pages/me/main'
+      // })
+    }else{
+
+    }
+
   },
   methods: {
     doLogin() {
@@ -24,6 +37,7 @@ export default {
       qcloud.login({
         success: function (userinfo) {
           wx.setStorageSync('userinfo',userinfo)
+          this.isLogin = true
           console.log('LoginSuccess', userinfo)
         },
         fail: function (err) {
