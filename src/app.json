@@ -1,16 +1,20 @@
 {
   "pages": [
+    "pages/me/main",
     "pages/home/main",
     "pages/comment/main",
     "pages/shop/main",
-    "pages/me/main",
+    "pages/mybookbox/main",
+    "pages/mycollect/main",
+    "pages/mycommentmessage/main",
+    "pages/myinfo/main",
     "pages/logs/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#EA5149",
     "navigationBarTitleText": "图书",
-    "navigationBarTextStyle": "light"
+    "navigationBarTextStyle": "white"
   },
  "tabBar": {
    "color": "#a9b7b7",

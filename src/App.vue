@@ -2,6 +2,18 @@
 
 export default {
   created () {
+    // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.userInfo" 这个 scope
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userInfo']) {
+        // 未授权
+        console.log('未授权')
+        // 授权
+        }
+      }
+    })
+
+
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
