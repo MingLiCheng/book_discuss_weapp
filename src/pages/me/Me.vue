@@ -9,7 +9,7 @@
         <open-data type="userNickName"></open-data>
       </div>
       <div class="user-qita">
-        <button v-show="!isLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">请登录</button>
+        <button v-show="!getIsLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">请登录</button>
       </div>
     </div>
     <div>
@@ -57,6 +57,14 @@ export default {
   },
   onLoad(){
     console.log('个人中心页面加载-->onLoad')
+    console.log('getisLogin', this.getIsLogin)
+    // 判断是否为登陆状态
+    if(!this.getIsLogin){
+
+    }
+  },
+  onUnload(){
+    console.log('onUnload')
   },
   onShow(){
     console.log('个人中心页面显示--->onshow')
@@ -90,7 +98,7 @@ export default {
     }
   },
   computed: {
-
+    ...mapGetters(['getIsLogin'])
   },
 }
 </script>

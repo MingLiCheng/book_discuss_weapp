@@ -1,23 +1,28 @@
 <template>
   <div>
+    <TopSwiper :tops='tops'></TopSwiper>
     <div class="test-model">
       <van-button round custom-class="xxx" @click="openSetting">授权</van-button>
       <van-button round custom-class="xxx" >登陆</van-button>
       <van-button round custom-class="xxx" @click="vuextest1">test1</van-button>
       <van-button round custom-class="xxx" @click="vuextest2">test2</van-button>
     </div>
-    <h1>这是首页</h1>
-    <h1 v-if="getIsLogin">test</h1>
+    <BookCard v-for="(bookitem, index) in booklist" :key="index" :book="bookitem"></BookCard>
   </div>
 </template>
 <script>
 import qcloud from 'wafer2-client-sdk'
 import config from '../../config.js'
 import * as Api from '../../utils/request.js'
+import TopSwiper from '@/components/TopSwiper'
+import BookCard from '@/components/BookCard'
 import { mapGetters, mapState } from 'vuex';
 export default {
+  components: { TopSwiper, BookCard },
   data() {
     return {
+      tops: [],
+      booklist:[]
     }
   },
   created() {
@@ -36,6 +41,14 @@ export default {
   },
   onShow() {
     console.log('首页显示-->onshow')
+
+  },
+  onLoad(){
+    this.getBookList()
+    this.getTop()
+  },
+  onPullDownRefresh () {
+    this.getTop()
   },
   updated() {
   },
@@ -56,6 +69,17 @@ export default {
           console.log(res.authSetting)
         }
       })
+    },
+    async getTop () {
+      const tops = await Api.getRequest('/top')
+      this.tops = tops.data.list
+      console.log('this.tops', this.tops)
+      wx.stopPullDownRefresh()
+    },
+    async getBookList(){
+      const list = await Api.getRequest('/booklist')
+      this.booklist = list.data.list
+      wx.stopPullDownRefresh()
     }
   },
   computed: {

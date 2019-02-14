@@ -8,12 +8,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules,
-  // plugins: [createPersistedState({
-  //   storage: {
-  //     getItem: key => wx.getStorageSync(key),
-  //     setItem: (key,value) => wx.setStorageSync(key, value),
-  //     removeItem: key => {},
-  //   }
-  // })]
+  plugins: [createPersistedState({
+    storage: {
+      getItem: key => wx.getStorageSync(key),
+      setItem: (key,value) => wx.setStorageSync(key, value),
+      removeItem: key => wx.removeStorageSync('vuex')
+    }
+  })]
 })
 
