@@ -1,14 +1,28 @@
 <template>
-  <div>
-    <TopSwiper :tops='tops'></TopSwiper>
-    <div class="test-model">
+  <section class="home-wrap">
+    <wux-search-bar clear maxlength="8"/>
+    <TopSwiper :tops="tops"></TopSwiper>
+    <!-- <div class="test-model">
       <van-button round custom-class="xxx" @click="openSetting">授权</van-button>
-      <van-button round custom-class="xxx" >登陆</van-button>
+      <van-button round custom-class="xxx">登陆</van-button>
       <van-button round custom-class="xxx" @click="vuextest1">test1</van-button>
       <van-button round custom-class="xxx" @click="vuextest2">test2</van-button>
+    </div>-->
+    <div class="classify-nav">
+      <wux-tabs controlled scroll :current="tabCurrent" @change="onTabsChange($event)">
+        <wux-tab key="tab1" title="全部"></wux-tab>
+        <wux-tab key="tab2" title="文学"></wux-tab>
+        <wux-tab key="tab3" title="流行"></wux-tab>
+        <wux-tab key="tab4" title="文化"></wux-tab>
+        <wux-tab key="tab5" title="生活"></wux-tab>
+        <wux-tab key="tab6" title="经管"></wux-tab>
+        <wux-tab key="tab7" title="科技"></wux-tab>
+      </wux-tabs>
     </div>
     <BookCard v-for="(bookitem, index) in booklist" :key="index" :book="bookitem"></BookCard>
-  </div>
+    <div v-if="!more" class="no-more-msg">没有更多</div>
+    <div v-if="more" class="no-more-msg">加载中</div>
+  </section>
 </template>
 <script>
 import qcloud from 'wafer2-client-sdk'
@@ -21,8 +35,18 @@ export default {
   components: { TopSwiper, BookCard },
   data() {
     return {
+      tabCurrent: 'tab1',
       tops: [],
-      booklist:[]
+      booklist: [],
+      book: {
+        image: "https://img3.doubanio.com/view/subject/m/public/s8958650.jpg",
+        title: 'xxx',
+        author: 'ccccc',
+        publisher: 'dddddd',
+        rate: 8
+      },
+      page: 0,
+      more: true,
     }
   },
   created() {
@@ -43,43 +67,55 @@ export default {
     console.log('首页显示-->onshow')
 
   },
-  onLoad(){
-    this.getBookList()
+  onLoad() {
+    this.getBookList(true)
     this.getTop()
   },
-  onPullDownRefresh () {
+  onPullDownRefresh() {
     this.getTop()
+    this.getBookList(true)
+  },
+  onReachBottom() {
+    if (!this.more) {
+      // 没有更多了
+      return false
+    }
+    this.page = this.page + 1
+    this.getBookList()
   },
   updated() {
   },
   methods: {
-    vuextest1() {
-      console.log('isLogin-vuex', this.isLogin)
-      console.log('isLogin-vuex', this.getIsLogin)
+    onTabsChange(e) {
+      console.log('oncheng', e)
+      console.log('切换到', e.mp.detail.key)
     },
-    vuextest2() {
-      // this.$store.dispatch('setIsLogin', false)
-      this.getIsLogin ? this.$store.dispatch('setIsLogin', false) : this.$store.dispatch('setIsLogin', true)
-
-    },
-    openSetting() {
-      wx.openSetting({
-        success(res) {
-          console.log('res',res)
-          console.log(res.authSetting)
-        }
-      })
-    },
-    async getTop () {
+    async getTop() {
       const tops = await Api.getRequest('/top')
       this.tops = tops.data.list
       console.log('this.tops', this.tops)
       wx.stopPullDownRefresh()
     },
-    async getBookList(){
-      const list = await Api.getRequest('/booklist')
-      this.booklist = list.data.list
-      wx.stopPullDownRefresh()
+    async getBookList(init) {
+      if (init) {
+        this.page = 0
+        this.more = true
+      }
+      wx.showNavigationBarLoading()
+      const list = await Api.getRequest('/booklist', { page: this.page })
+      if (list.data.list.length < 10 && this.page > 0) {
+        this.more = false
+        console.log('this.more', this.more)
+      }
+      if (init) {
+        this.booklist = list.data.list
+        wx.stopPullDownRefresh()
+      } else {
+        // 下拉刷新，不能直接覆盖books 而是累加
+        this.booklist = this.booklist.concat(list.data.list)
+      }
+      wx.hideNavigationBarLoading()
+
     }
   },
   computed: {
@@ -88,17 +124,33 @@ export default {
 }
 </script>
 <style lang="less">
-.test-model {
-  height: 100rpx;
-  width: 100%;
-  background-color: rgba(77, 74, 74, 0.507);
-  display: flex;
-  justify-content: space-around;
-  position: fixed;
-  left: 0;
-  top: 0;
-  .xxx {
-    background-color: rgba(255, 255, 255, 0);
+.home-wrap {
+  .test-model {
+    height: 100rpx;
+    width: 100%;
+    background-color: rgba(77, 74, 74, 0.507);
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    left: 0;
+    top: 0;
+    .xxx {
+      background-color: rgba(255, 255, 255, 0);
+    }
+  }
+  .classify-nav {
+    // height: 100rpx;
+    width: 750rpx;
+    background-color: rgb(245, 61, 61);
+  }
+  .book-image {
+    width: 200rpx;
+  }
+  .no-more-msg{
+    text-align:center;
+    font-size:24rpx;
+    color:rgb(172, 166, 166);
+
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <script>
-
+import { showSuccess } from "./utils/index.js";
 export default {
   created () {
     // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.userInfo" 这个 scope
@@ -19,6 +19,21 @@ export default {
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     console.log('app created and cache logs by setStorageSync')
+
+    // 判断用户是否登陆
+    // 1.检测是否有缓存
+    const userinfo = wx.getStorageSync('userinfo') || null
+    if(userinfo) {
+      this.$store.dispatch('setIsLogin', true)
+        wx.showToast({
+        title: '欢迎回来'+`${userinfo.nickName}`,
+        icon: 'success',
+        duration: 2000
+      })
+      // showSuccess('欢迎回来'+`${userinfo.nickName}`)
+    }else{
+
+    }
   }
 }
 </script>

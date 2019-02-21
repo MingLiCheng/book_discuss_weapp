@@ -7,7 +7,10 @@
     "wux-cell-group": "../../static/wux/cell-group/index",
     "wux-cell": "../../static/wux/cell/index",
     "wux-rater": "../../static/wux/rater/index",
-    "wux-image": "../../static/wux/image/index"
+    "wux-image": "../../static/wux/image/index",
+    "wux-search-bar": "../../static/wux/search-bar/index",
+    "wux-tabs": "../../static/wux/tabs/index",
+    "wux-tab": "../../static/wux/tab/index"
   },
   "enablePullDownRefresh": true
 }

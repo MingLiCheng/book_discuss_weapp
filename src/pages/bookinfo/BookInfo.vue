@@ -1,31 +1,47 @@
 <template>
   <div>
-    <h1>这是书本信息:{{ bookid }}</h1>
-    <BookCard :book="book"></BookCard>
+    <BookInfo :book="book"></BookInfo>
+    <CommentList></CommentList>
   </div>
 </template>
 <script>
 import BookCard from "@/components/BookCard";
+import BookInfo from "@/components/BookInfo";
+import CommentList from "@/components/CommentList";
+import { getRequest } from "../../utils/request.js";
 export default {
   components: {
-    BookCard
+    BookCard,
+    BookInfo,
+    CommentList
   },
   data() {
     return {
-      bookid:'',
-      book:{
-        title:'1111',
-        author:'2222',
-        publisher:'3333',
-        rate:'8',
-      }
+      bookid: '',
+      book: {}
     }
   },
   mounted() {
     this.bookid = this.$root.$mp.query.id
+    this.getBookInfoById()
+  },
+  methods: {
+    async getBookInfoById() {
+      await getRequest('/bookdetail', { id: `${this.bookid}` }).then(res => {
+        wx.setNavigationBarTitle({
+          title: res.data.title
+        })
+        this.book = res.data
+        console.log('getBookInfoById,res', res)
+      })
+
+    }
   },
 }
 </script>
 <style lang="less" scoped>
-
+.bookinfo-test{
+  width: 100%;
+  overflow: hidden;
+}
 </style>

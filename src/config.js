@@ -1,4 +1,4 @@
-const host = 'http://47.112.22.111:5757/weapp'
+const host = 'http://47.112.22.111/weapp'
 
 const loginUrl = `${host}/login`
 

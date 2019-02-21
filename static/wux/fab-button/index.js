@@ -170,7 +170,6 @@ baseComponent({
                 this.setData({
                     buttonVisible,
                 })
-
                 this.updateButtonStyle(!buttonVisible)
             }
         },
@@ -178,7 +177,6 @@ baseComponent({
             if (!this.data.controlled) {
                 this.updated(buttonVisible)
             }
-
             this.triggerEvent('change', { value: buttonVisible })
         },
         onToggle() {
@@ -193,8 +191,8 @@ baseComponent({
             }
 
             if (!value.disabled) {
-                this.triggerEvent('click', params)
-                this.onChange(false)
+                this.triggerEvent('iclick', params)
+                // this.onChange(false)
             }
         },
         /**

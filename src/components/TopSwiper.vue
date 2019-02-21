@@ -48,7 +48,8 @@ export default {
 </script>
 <style lang='less'>
 .swiper{
-  margin-top:5px;
+  box-sizing: border-box;
+  padding-top:5px;
   background-color: rgba(221, 224, 226, 0.959);
   .slide-image{
     width:33%;
