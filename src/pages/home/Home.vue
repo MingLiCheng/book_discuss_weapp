@@ -2,12 +2,6 @@
   <section class="home-wrap">
     <wux-search-bar clear maxlength="8"/>
     <TopSwiper :tops="tops"></TopSwiper>
-    <!-- <div class="test-model">
-      <van-button round custom-class="xxx" @click="openSetting">授权</van-button>
-      <van-button round custom-class="xxx">登陆</van-button>
-      <van-button round custom-class="xxx" @click="vuextest1">test1</van-button>
-      <van-button round custom-class="xxx" @click="vuextest2">test2</van-button>
-    </div>-->
     <div class="classify-nav">
       <wux-tabs controlled scroll :current="tabCurrent" @change="onTabsChange($event)">
         <wux-tab key="tab1" title="全部"></wux-tab>
@@ -38,13 +32,7 @@ export default {
       tabCurrent: 'tab1',
       tops: [],
       booklist: [],
-      book: {
-        image: "https://img3.doubanio.com/view/subject/m/public/s8958650.jpg",
-        title: 'xxx',
-        author: 'ccccc',
-        publisher: 'dddddd',
-        rate: 8
-      },
+      book: {},
       page: 0,
       more: true,
     }
@@ -60,12 +48,10 @@ export default {
       //   url: '/pages/me/main'
       // })
     } else {
-
     }
   },
   onShow() {
     console.log('首页显示-->onshow')
-
   },
   onLoad() {
     this.getBookList(true)
@@ -89,6 +75,7 @@ export default {
     onTabsChange(e) {
       console.log('oncheng', e)
       console.log('切换到', e.mp.detail.key)
+      this.tabCurrent = e.mp.detail.key
     },
     async getTop() {
       const tops = await Api.getRequest('/top')

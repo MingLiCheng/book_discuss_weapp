@@ -1,4 +1,5 @@
 import config from '../config'
+import qcloud from 'wafer2-client-sdk'
 
 export function getRequest(url, params) {
   return request(url, 'GET', params)
@@ -9,7 +10,7 @@ export function postRequest(url, params) {
 
 function request(url, method, params = null) {
     return new Promise((reslove, reject) => {
-      wx.request({
+      qcloud.request({
         url: config.host + url, // 仅为示例，并非真实的接口地址
         method,
         header: {

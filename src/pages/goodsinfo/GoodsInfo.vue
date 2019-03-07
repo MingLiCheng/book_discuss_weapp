@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>这是商品详细信息页面 商品id{{ goodsId }}</h1>
+    <h1>这是商品详细信息页面 书本id{{ bookId }},商品ID {{ goodId }}</h1>
     <BookInfo :book="book"></BookInfo>
     <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服"/>
@@ -19,13 +19,15 @@ export default {
   },
   data() {
     return {
-      goodsId: '',
+      bookId: '',
+      goodId:'',
       book: {}
 
     }
   },
   mounted() {
-    this.goodsId = this.$root.$mp.query.goodsId
+    this.bookId = this.$root.$mp.query.bookId
+    this.goodId = this.$root.$mp.query.goodId
     this.getBookInfoById()
   },
   methods: {
@@ -37,7 +39,7 @@ export default {
       console.log('点击按钮');
     },
     async getBookInfoById() {
-      await getRequest('/bookdetail', { id: `${this.goodsId}` }).then(res => {
+      await getRequest('/bookdetail', { id: `${this.bookId}` }).then(res => {
         wx.setNavigationBarTitle({
           title: res.data.title
         })

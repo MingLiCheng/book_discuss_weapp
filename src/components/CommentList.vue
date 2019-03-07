@@ -1,12 +1,15 @@
 <template>
   <section class="comment-list-wrap">
+    <CommentCard></CommentCard>
     <button @click="testForLoc($event)">获取地理位置的测试</button>
     <button>获取测试</button>
   </section>
 </template>
 
 <script>
+import CommentCard from "./comment/CommentCard.vue";
 export default {
+  components: { CommentCard },
   data() {
     return {
       location:''

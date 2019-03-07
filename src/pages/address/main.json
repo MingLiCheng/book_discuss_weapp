@@ -5,6 +5,8 @@
     "wux-cell-group": "../../static/wux/cell-group/index",
     "wux-cell": "../../static/wux/cell/index",
     "van-field": "../../static/vant/field/index",
-    "van-cell": "../../static/vant/cell/index"
+    "van-cell": "../../static/vant/cell/index",
+    "van-icon": "../../static/vant/icon/index",
+    "van-button": "../../static/vant/button/index"
   }
 }

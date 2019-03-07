@@ -1,10 +1,8 @@
 {
   "pages": [
+    "pages/me/main",
     "pages/home/main",
     "pages/bookinfo/main",
-
-    "pages/me/main",
-
     "pages/comment/main",
     "pages/shop/main",
     "pages/mybookbox/main",
@@ -12,7 +10,8 @@
     "pages/mycommentmessage/main",
     "pages/myinfo/main",
     "pages/goodsinfo/main",
-
+    "pages/address/main",
+    "pages/cart/main",
     "pages/logs/main"
   ],
   "permission": {

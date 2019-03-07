@@ -1,7 +1,7 @@
 <template>
   <div>
     <BookInfo :book="book"></BookInfo>
-    <CommentList></CommentList>
+    <!-- <CommentList></CommentList> -->
   </div>
 </template>
 <script>

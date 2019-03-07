@@ -7,6 +7,7 @@
 const state = {
   account: '',
   isLogin: false,
+  openId: '',
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
   },
   SET_ISLOGIN(state, value) {
     state.isLogin = value
+  },
+  SET_OPENID(state, value) {
+    state.openId = value
   }
 }
 
@@ -26,6 +30,9 @@ const actions = {
   },
   setIsLogin({commit}, value) {
     commit('SET_ISLOGIN', value)
+  },
+  setOpenId({commit}, value) {
+    commit('SET_OPENID', value)
   }
 }
 
@@ -35,6 +42,9 @@ const getters = {
   },
   getIsLogin: (state) => {
     return state.isLogin
+  },
+  getOpenId: (state) => {
+    return state.openId
   }
 }
 

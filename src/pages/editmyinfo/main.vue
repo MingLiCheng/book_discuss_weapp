@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-submit-bar price="3050" button-text="提交订单" bind:submit="onSubmit"/>
+    <h1>这是模板页面</h1>
   </div>
 </template>
 <script>
@@ -9,5 +9,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-</style>
 
+</style>

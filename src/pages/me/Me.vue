@@ -83,6 +83,7 @@ export default {
           wx.setStorageSync('userinfo', userinfo)
           // _this.isLogin = true
           _this.$store.dispatch('setIsLogin', true)
+          _this.$store.dispatch('setOpenId', userinfo.openId)
           _this.userInfo = userinfo
           console.log('LoginSuccess', userinfo)
           wx.showToast({
@@ -128,7 +129,7 @@ export default {
     .user-qita {
       min-width: 240rpx;
       height: 100%;
-      background-color: aqua;
+      // background-color: aqua;
     }
   }
   .me-module-box {

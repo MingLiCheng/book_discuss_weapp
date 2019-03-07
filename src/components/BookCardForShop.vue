@@ -12,13 +12,17 @@
     <div class="title-box">{{ goods.author }}</div>
     <div class="book-price">
       <div class="price-box">{{ goods.price }}</div>
-      <div class="car-icon-box">
-        <wux-icon type="ios-cart" size="18" color="#EA5149"/>
+      <div class="car-icon-box" @click="addToCart">
+        <wux-icon  type="ios-cart" size="18" color="#EA5149"/>
       </div>
     </div>
+
+  <wux-toptips id="wux-toptips" />
   </section>
 </template>
 <script>
+import { getRequest, postRequest } from "@/utils/request.js";
+import { $wuxToptips } from '../../static/wux/index'
 export default {
   data() {
     return {
@@ -29,7 +33,25 @@ export default {
   methods: {
     toGoodsInfoPage() {
       wx.navigateTo({
-        url: '/pages/goodsinfo/main?goodsId=' + this.goods.id
+        url: '/pages/goodsinfo/main?goodId=' + this.goods.good_id + '&bookId='+this.goods.book_id
+      })
+    },
+    addToCart(){
+      console.log('good', this.goods)
+      postRequest('/cart/addgood',{
+        open_id: wx.getStorageSync('userinfo').openId,
+        good_id: this.goods.good_id,
+        goodnum:'1',
+        goodprice: this.goods.price.substr(0,5)
+      }).then( res=> {
+        if(res.data.message == 'SUCCESS'){
+          $wuxToptips().success({
+            hidden: false,
+            text: '添加成功',
+            duration: 2000,
+            success() {},
+        })
+        }
       })
     }
   },

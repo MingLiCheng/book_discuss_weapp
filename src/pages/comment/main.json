@@ -1,0 +1,17 @@
+{
+  "usingComponents": {
+    "wux-icon": "../../static/wux/icon/index",
+    "wux-button": "../../static/wux/button/index",
+    "wux-card": "../../static/wux/card/index",
+    "wux-wing-blank": "../../static/wux/wing-blank/index",
+    "wux-cell-group": "../../static/wux/cell-group/index",
+    "wux-cell": "../../static/wux/cell/index",
+    "wux-rater": "../../static/wux/rater/index",
+    "wux-image": "../../static/wux/image/index",
+    "wux-search-bar": "../../static/wux/search-bar/index",
+    "wux-tabs": "../../static/wux/tabs/index",
+    "wux-tab": "../../static/wux/tab/index",
+    "van-tab": "../../static/vant/tab/index",
+    "van-tabs": "../../static/vant/tabs/index"
+  }
+}

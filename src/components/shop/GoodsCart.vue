@@ -1,20 +1,13 @@
 <template>
   <view>
-    <van-card num="2" tag="标签" price="10.00" desc="描述信息" title="商品标题" thumb="https://img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg">
-      <view slot="footer">
-        <van-button size="mini">按钮</van-button>
-        <van-button size="mini">按钮</van-button>
+    <van-card :num="cart.goodnum" tag="标签" :price="parseFloat(cart.goodprice) " :desc="cart.author" :title="cart.title" :thumb="cart.image">
+            <view  class="slot-tags" slot="tags">
+        <wux-input-number color="assertive" slot="footer" />
+      </view>
+      <view  slot="footer">
+        <wux-input-number color="assertive" slot="footer" />
       </view>
     </van-card>
-
-      <van-submit-bar
-        :price="3050"
-        button-text="提交订单"
-        @submit="onClickButton"
-        custom-class="van-submit-bar"
-        safe-area-inset-bottom="false"
-      />
-
   </view>
 </template>
 <script>
@@ -23,12 +16,14 @@ export default {
     return {
     }
   },
+  props:['cart'],
   methods: {
     onClickButton() {
       console.log('点击按钮');
     },
     onClickLink() {
       console.log('修改地址');
+
     }
   }
 }
@@ -43,6 +38,9 @@ export default {
 }
 .van-tag {
   margin-left: 15px;
+}
+.slot-tags{
+  display:'flex'
 }
 </style>
 
