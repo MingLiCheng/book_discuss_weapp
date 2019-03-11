@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Main from './main.vue'
+import NewComment from './NewComment.vue'
 
-const app = new Vue(Main)
+const app = new Vue(NewComment)
 app.$mount()

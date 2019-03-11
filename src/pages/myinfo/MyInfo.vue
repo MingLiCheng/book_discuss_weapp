@@ -19,10 +19,34 @@
         <van-cell icon="location-o" title="收货地址" value="管理我的地址" is-link url="/pages/address/main"/>
       </wux-cell-group>
       <wux-cell-group v-if="isEdit" title="编辑个人信息">
-        <van-field :value="userInfo.username" label="姓名" left-icon="contact" :border="false"/>
-        <van-field :value="userInfo.nickName" label="昵称" disabled left-icon="user-circle-o" :border="false"/>
-        <van-field :value="userInfo.email" label="邮箱" left-icon="free-postage" :border="false"/>
-        <van-field :value="userInfo.tel_num" label="电话" left-icon="phone-o" :border="false"/>
+        <van-field
+          @input="inputUsername"
+          :value="userInfo.username"
+          label="姓名"
+          left-icon="contact"
+          :border="false"
+        />
+        <van-field
+          :value="userInfo.nickName"
+          label="昵称"
+          disabled
+          left-icon="user-circle-o"
+          :border="false"
+        />
+        <van-field
+          @input="inputEmail"
+          :value="userInfo.email"
+          label="邮箱"
+          left-icon="free-postage"
+          :border="false"
+        />
+        <van-field
+          @input="inputTel"
+          :value="userInfo.tel_num"
+          label="电话"
+          left-icon="phone-o"
+          :border="false"
+        />
         <!-- <van-field :value="userInfo.username" label="用户名" placeholder="location-o" error/> -->
         <!-- <van-field
           :value="userInfo.tel_num"
@@ -41,7 +65,7 @@
           use-button-slot
         >
           <van-button slot="button" size="small" type="primary">发送验证码</van-button>
-        </van-field> -->
+        </van-field>-->
       </wux-cell-group>
     </div>
     <div class="edit-box-wrap">
@@ -56,8 +80,9 @@ import { postRequest } from '../../utils/request.js'
 export default {
   data() {
     return {
-      isEdit:false,
+      isEdit: false,
       userInfo: {},
+      editInfo: {},
     }
   },
   async mounted() {
@@ -91,11 +116,44 @@ export default {
           ...this.userInfo,
           ...res.data.data.userinfo
         }
+        this.editInfo = res.data.data.userinfo
         console.log('userInfo', this.userInfo)
       })
     },
-    changeToEdit(){
+    changeToEdit() {
       this.isEdit = true
+    },
+    inputUsername(e) {
+      this.editInfo.username = e.mp.detail
+    },
+    inputEmail(e) {
+      this.editInfo.email = e.mp.detail
+    },
+    inputTel(e) {
+      this.editInfo.tel_num = e.mp.detail
+    },
+    editUserInfo() {
+      let params = {
+        open_id: wx.getStorageSync('userinfo').openId,
+        username: this.editInfo.username,
+        tel_num: this.editInfo.tel_num,
+        email: this.editInfo.email
+      }
+      console.log('params', params)
+      postRequest('/user/edituserinfo', params).then(res => {
+        if (res.data.message == 'SUCCESS') {
+          this.getUserInfoFromMy()
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000
+          })
+          setTimeout(() => {
+            this.isEdit = false
+          }, 500);
+
+        }
+      })
     }
   },
 }

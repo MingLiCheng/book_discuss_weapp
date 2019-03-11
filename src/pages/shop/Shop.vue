@@ -11,9 +11,11 @@
         ></BookCardForShop>
       </div>
     </div>
+    <div v-if="!more" class="no-more-msg">没有更多</div>
+    <div v-if="more" class="no-more-msg">加载中</div>
 
     <!-- 浮动按钮 -->
-  <FabButton></FabButton>
+    <FabButton></FabButton>
   </section>
 </template>
 <script>
@@ -28,6 +30,8 @@ export default {
   data() {
     return {
       goodsList: [],
+      page: 0,
+      more: true,
     }
   },
   methods: {
@@ -36,12 +40,39 @@ export default {
         this[key] = data[key]
       })
     },
-    async getGoodsList() {
-      const list = await Api.getRequest('/shop/goodslist')
-      this.goodsList = list.data.list
+    async getGoodsList(init) {
+      if (init) {
+        this.page = 0
+        this.more = true
+      }
+      wx.showNavigationBarLoading()
+      const list = await Api.getRequest('/shop/goodslist', { page: this.page })
+      if (list.data.list.length < 10 && this.page > 0) {
+        this.more = false
+      }
+      if (init) {
+        this.goodsList = list.data.list
+        wx.stopPullDownRefresh()
+      } else {
+        // 下拉刷新，不能直接覆盖books 而是累加
+        this.goodsList = this.goodsList.concat(list.data.list)
+      }
+      wx.hideNavigationBarLoading()
+
     }
   },
   mounted() {
+    this.getGoodsList(true)
+  },
+  onPullDownRefresh() {
+    this.getGoodsList(true)
+  },
+  onReachBottom() {
+    if (!this.more) {
+      // 没有更多了
+      return false
+    }
+    this.page = this.page + 1
     this.getGoodsList()
   },
 
@@ -66,5 +97,10 @@ export default {
   bottom: 100rpx !important;
 }
 .shop-wrap {
+  .no-more-msg {
+    text-align: center;
+    font-size: 24rpx;
+    color: rgb(172, 166, 166);
+  }
 }
 </style>

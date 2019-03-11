@@ -1,18 +1,13 @@
 <template>
-  <section @click="toCommentInfo" class="commentcard-wrap">
+  <section class="commentTwoLev-wrap">
     <div class="crad-header">
       <div class="user-image-box">
         <img :src="userinfo.avatarUrl" alt>
       </div>
-      <div class="username-box">{{ userinfo.nickName }}</div>
+      <div class="username-box"><span>{{ userinfo.nickName }}</span> <span class="reply">回复</span></div>
     </div>
     <div class="crad-body">
-      <div class="comment-title">{{ commentInfo.title }}</div>
-      <text class="comment-info">{{ commentInfo.summary }}</text>
-    </div>
-    <div class="crad-footer">
-      <div class="up-box">{{ commentInfo.upnumber }} <wux-icon type="ios-arrow-round-up" size="20" color="#EA5149" /></div>
-      <div class="comment-box">{{ commentInfo.downnumber }} <wux-icon type="ios-arrow-round-down" size="20" color="#EA5149" /></div>
+      <text class="comment-info">{{ commentInfo.content }}</text>
     </div>
   </section>
 </template>
@@ -48,22 +43,15 @@ export default {
     },
   },
   methods: {
-    toCommentInfo(){
-       wx.navigateTo({
-        url: '/pages/commentinfo/main?commentId=' + this.commentInfo.id
-      })
-    }
   },
 }
 </script>
 
 <style lang="less" scoped>
-.commentcard-wrap {
+.commentTwoLev-wrap {
   width: 100%;
-  // border: 2rpx solid rgb(218, 214, 214);
   border-left: none;
   border-right: none;
-  // border-radius: 10px;
   margin: 10rpx auto;
   box-sizing: border-box;
   padding: 0px 10rpx;
@@ -83,9 +71,19 @@ export default {
       }
     }
     .username-box {
+      width: 80%;
       color: rgb(179, 170, 170);
-      font-size: 36rpx;
+      font-size: 30rpx;
       margin-left: 15rpx;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .reply{
+        display: inline-block;
+        font-size: 20rpx;
+        border: 1rpx solid rgb(224, 222, 222);
+        padding: 0 5rpx;
+      }
     }
   }
   .crad-body {
@@ -97,10 +95,8 @@ export default {
       padding: 8rpx 0px;
     }
     .comment-info {
-      font-size: 26rpx;
+      font-size: 28rpx;
       color: rgb(110, 104, 104);
-      // height: 100rpx;
-      // border: 1rpx solid #ccc;
       border-radius: 8rpx;
       padding: 8rpx;
       display: -webkit-box;
@@ -117,7 +113,6 @@ export default {
     font-size: 30rpx;
     color: rgb(167, 163, 163);
     line-height: 50rpx;
-    // border-bottom: 1rpx solid #ccc;
     .up-box {
       height: 100%;
     }

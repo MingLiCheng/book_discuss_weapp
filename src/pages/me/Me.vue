@@ -52,7 +52,7 @@ export default {
       //   url: '/pages/me/main'
       // })
     } else {
-
+       this.$store.dispatch('setIsLogin', false)
     }
   },
   onLoad(){

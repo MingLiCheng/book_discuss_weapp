@@ -8,6 +8,7 @@
     "van-card": "../../static/vant/card/index",
     "wux-fab-button": "../../static/wux/fab-button/index",
     "wux-image": "../../static/wux/image/index",
+    "wux-dialog": "../../static/wux/dialog/index",
     "wux-input-number": "../../static/wux/input-number/index"
   }
 }

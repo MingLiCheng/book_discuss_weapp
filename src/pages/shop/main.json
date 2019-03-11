@@ -9,5 +9,6 @@
     "van-submit-bar": "../../static/vant/submit-bar/index",
     "van-card": "../../static/vant/card/index",
     "wux-toptips": "../../static/wux/toptips/index"
-  }
+  },
+  "enablePullDownRefresh": true
 }

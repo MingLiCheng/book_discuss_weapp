@@ -5,7 +5,7 @@
         <div class="search-box-a">
           <wux-search-bar clear maxlength="8"/>
         </div>
-        <div class="create-btn-box">
+        <div class="create-btn-box" @click="toNewComment">
           <wux-icon type="ios-create" size="28" color="#0084ff"/>
         </div>
       </div>
@@ -129,6 +129,11 @@ export default {
       const res = await Api.getRequest('/commentlist')
       console.log('comments', res)
       this.comments = res.data.list
+    },
+    toNewComment(){
+      wx.navigateTo({
+        url: '/pages/newcomment/main'
+      })
     }
   },
 
@@ -152,7 +157,7 @@ export default {
       flex: 1;
     }
     .create-btn-box {
-      width: 100rpx;
+      width: 66rpx;
       display: flex;
       align-items: center;
     }
