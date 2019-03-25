@@ -9,7 +9,7 @@
         <open-data type="userNickName"></open-data>
       </div>
       <div class="user-qita">
-        <button v-show="!getIsLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">请登录</button>
+        <wux-button wux-class="user-login-btn" clear block v-show="!getIsLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">登录</wux-button>
       </div>
     </div>
     <div>
@@ -46,7 +46,7 @@ export default {
     // 判断用户是否的相关缓存
     if (wx.getStorageSync('userinfo')) {
       // 发生过授权
-      this.isLogin = false
+      this.$store.dispatch('setIsLogin', false)
 
       // wx.switchTab({
       //   url: '/pages/me/main'
@@ -103,7 +103,7 @@ export default {
   },
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .me-container {
   .me-info-card {
     height: 320rpx;
@@ -124,12 +124,20 @@ export default {
       }
     }
     .user-nickname {
-      background: rgb(126, 113, 113);
+      color: #ffffff;
+      font-weight: 500;
     }
     .user-qita {
       min-width: 240rpx;
       height: 100%;
       // background-color: aqua;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      .user-login-btn{
+        color: #ffffff;
+        }
     }
   }
   .me-module-box {

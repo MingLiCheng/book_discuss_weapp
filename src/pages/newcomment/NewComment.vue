@@ -54,13 +54,6 @@ export default {
     },
     save(){
       console.log('bookid', this.bookid, 'title', this.title)
-          // openid,
-    // bookid,
-    // title,
-    // summary,
-    // content,
-    // location,
-    // phoneversion
     }
   },
 

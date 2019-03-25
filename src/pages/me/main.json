@@ -2,6 +2,7 @@
   "usingComponents": {
     "wux-avatar": "../../static/wux/avatar/index",
     "wux-cell-group": "../../static/wux/cell-group/index",
-    "wux-cell": "../../static/wux/cell/index"
+    "wux-cell": "../../static/wux/cell/index",
+    "wux-button": "../../static/wux/button/index"
   }
 }
