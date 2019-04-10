@@ -2,13 +2,15 @@
   <section class="book-card-wrap">
     <wux-card>
       <view slot="body" class="card-body">
-        <wux-image
-          wux-class="image"
-          width="200rpx"
-          height="271rpx"
-          :src="book.image"
-          loading="Loading"
-        />
+          <view class="adv-fdlogo" v-if="book.adv_id">广告</view>
+          <wux-image
+            wux-class="image"
+            width="200rpx"
+            height="271rpx"
+            :src="book.image"
+            loading="Loading"
+          />
+
         <view class="book-info-msg" @click="toBookInfo">
           <view class="info-left">
             <p class="book-title">{{ book.title }}</p>
@@ -68,6 +70,18 @@ export default {
   .card-body {
     // background-color: rgb(56, 55, 55);
     display: flex;
+    .adv-fdlogo {
+      position: absolute;
+      width: 80rpx;
+      height: 40rpx;
+      background-color: rgb(34, 253, 89);
+      z-index: 11;
+      border-radius: 8rpx;
+      color: #f8f1f1;
+      text-align: center;
+      line-height: 40rpx;
+      font-weight: 500;
+    }
     wux-image{
       border: 1rpx solid #EA5149;
       margin-right: 10rpx;

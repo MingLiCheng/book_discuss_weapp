@@ -114,9 +114,9 @@ export default {
         console.log('res', res)
         this.userInfo = {
           ...this.userInfo,
-          ...res.data.data.userinfo
+          ...res.data.userinfo
         }
-        this.editInfo = res.data.data.userinfo
+        this.editInfo = res.data.userinfo
         console.log('userInfo', this.userInfo)
       })
     },

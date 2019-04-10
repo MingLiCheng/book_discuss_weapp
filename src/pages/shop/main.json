@@ -8,7 +8,8 @@
     "van-tag": "../../static/vant/tag/index",
     "van-submit-bar": "../../static/vant/submit-bar/index",
     "van-card": "../../static/vant/card/index",
-    "wux-toptips": "../../static/wux/toptips/index"
+    "wux-toptips": "../../static/wux/toptips/index",
+    "wux-dialog": "../../static/wux/dialog/index"
   },
   "enablePullDownRefresh": true
 }

@@ -1,9 +1,3 @@
-/**
- * account
- * password
- * isRemberPassword
- * isAutoLogin
- */
 const state = {
   account: '',
   isLogin: false,

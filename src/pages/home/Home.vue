@@ -5,12 +5,12 @@
     <div class="classify-nav">
       <wux-tabs controlled scroll :current="tabCurrent" @change="onTabsChange($event)">
         <wux-tab key="tab1" title="全部"></wux-tab>
-        <wux-tab key="tab2" title="文学"></wux-tab>
-        <wux-tab key="tab3" title="流行"></wux-tab>
-        <wux-tab key="tab4" title="文化"></wux-tab>
-        <wux-tab key="tab5" title="生活"></wux-tab>
-        <wux-tab key="tab6" title="经管"></wux-tab>
-        <wux-tab key="tab7" title="科技"></wux-tab>
+        <wux-tab key="文学" title="文学"></wux-tab>
+        <wux-tab key="流行" title="流行"></wux-tab>
+        <wux-tab key="文化" title="文化"></wux-tab>
+        <wux-tab key="生活" title="生活"></wux-tab>
+        <wux-tab key="经管" title="经管"></wux-tab>
+        <wux-tab key="科技" title="科技"></wux-tab>
       </wux-tabs>
     </div>
     <BookCard v-for="(bookitem, index) in booklist" :key="index" :book="bookitem"></BookCard>
@@ -73,14 +73,20 @@ export default {
   },
   methods: {
     onTabsChange(e) {
-      console.log('oncheng', e)
-      console.log('切换到', e.mp.detail.key)
       this.tabCurrent = e.mp.detail.key
+      if(this.tabCurrent != 'tab1'){
+        this.getBookByType(this.tabCurrent)
+      }else{
+         this.getBookList(true)
+      }
     },
     async getTop() {
       const tops = await Api.getRequest('/top')
       this.tops = tops.data.list
-      console.log('this.tops', this.tops)
+      const bookAdv = await Api.getRequest('/adv/listByTypeId', { typeId: 0 })
+      console.log('bookAdv', bookAdv.data.list)
+      this.tops.splice(Math.floor(Math.random()*8+0) ,0,bookAdv.data.list[0])
+      console.log('this.topsxxxxxxxxxxxxxxxxxxxxx', this.tops)
       wx.stopPullDownRefresh()
     },
     async getBookList(init) {
@@ -96,13 +102,23 @@ export default {
       }
       if (init) {
         this.booklist = list.data.list
+        await this.getAdvBookList()
         wx.stopPullDownRefresh()
       } else {
         // 下拉刷新，不能直接覆盖books 而是累加
         this.booklist = this.booklist.concat(list.data.list)
       }
       wx.hideNavigationBarLoading()
-
+    },
+    async getBookByType(type) {
+      const list = await Api.getRequest('/book/getBooklistByType', { type })
+      this.booklist = list.data.list
+    },
+    // 获取广告的列表
+    async getAdvBookList() {
+      const res = await Api.getRequest('/adv/listByTypeId', { typeId: 0 })
+      this.booklist = this.booklist.concat(res.data.list)
+      console.log('xxxx', this.booklist)
     }
   },
   computed: {
@@ -137,7 +153,6 @@ export default {
     text-align:center;
     font-size:24rpx;
     color:rgb(172, 166, 166);
-
   }
 }
 </style>

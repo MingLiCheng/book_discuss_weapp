@@ -24,8 +24,9 @@ export default {
     // 1.检测是否有缓存
     const userinfo = wx.getStorageSync('userinfo') || null
     if(userinfo) {
+      console.log('存在userinfo')
       this.$store.dispatch('setIsLogin', true)
-        wx.showToast({
+      wx.showToast({
         title: '欢迎回来'+`${userinfo.nickName}`,
         icon: 'success',
         duration: 2000

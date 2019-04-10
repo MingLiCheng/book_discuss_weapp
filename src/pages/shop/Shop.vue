@@ -47,11 +47,12 @@ export default {
       }
       wx.showNavigationBarLoading()
       const list = await Api.getRequest('/shop/goodslist', { page: this.page })
-      if (list.data.list.length < 10 && this.page > 0) {
-        this.more = false
-      }
+
       if (init) {
         this.goodsList = list.data.list
+        if (this.goodsList.length >= list.data.total) {
+        this.more = false
+      }
         wx.stopPullDownRefresh()
       } else {
         // 下拉刷新，不能直接覆盖books 而是累加
@@ -82,11 +83,6 @@ export default {
 .goods-box {
   display: flex;
   flex-wrap: wrap;
-  // justify-content: space-around;
-}
-.fubtn_one {
-  // background: #000 !important;
-  // background-image: url("https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3426693439,1368089707&fm=173&app=49&f=JPEG?w=218&h=146&s=F922851855787E27354885C3030060B9") !important;
 }
 .wux-fab-button__icon {
   width: 60rpx !important;

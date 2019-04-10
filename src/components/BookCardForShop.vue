@@ -1,6 +1,9 @@
 <template>
   <section class="bookcardforshop-wrap">
-    <div class="image-box" @click="toGoodsInfoPage">
+    <div
+      class="image-box"
+      @click="toGoodsInfoPage"
+    >
       <wux-image
         wux-class="image"
         width="200rpx"
@@ -12,51 +15,76 @@
     <div class="title-box">{{ goods.author }}</div>
     <div class="book-price">
       <div class="price-box">{{ goods.price }}</div>
-      <div class="car-icon-box" @click="addToCart">
-        <wux-icon  type="ios-cart" size="18" color="#EA5149"/>
+      <div
+        class="car-icon-box"
+        @click="addToCart"
+      >
+        <wux-icon
+          type="ios-cart"
+          size="18"
+          color="#EA5149"
+        />
       </div>
     </div>
 
-  <wux-toptips id="wux-toptips" />
+    <wux-toptips id="wux-toptips" />
+    <wux-dialog id="wux-dialog" />
   </section>
 </template>
 <script>
 import { getRequest, postRequest } from "@/utils/request.js";
-import { $wuxToptips } from '../../static/wux/index'
+import { $wuxToptips, $wuxDialog } from "../../static/wux/index";
 export default {
   data() {
-    return {
-
-    }
+    return {};
   },
-  props: ['goods'],
+  props: ["goods"],
   methods: {
     toGoodsInfoPage() {
       wx.navigateTo({
-        url: '/pages/goodsinfo/main?goodId=' + this.goods.good_id + '&bookId='+this.goods.book_id
-      })
+        url:
+          "/pages/goodsinfo/main?goodId=" +
+          this.goods.good_id +
+          "&bookId=" +
+          this.goods.book_id
+      });
     },
-    addToCart(){
-      console.log('good', this.goods)
-      postRequest('/cart/addgood',{
-        open_id: wx.getStorageSync('userinfo').openId,
-        good_id: this.goods.good_id,
-        goodnum:'1',
-        goodprice: this.goods.price.substr(0,5)
-      }).then( res=> {
-        if(res.data.message == 'SUCCESS'){
-          $wuxToptips().success({
-            hidden: false,
-            text: '添加成功',
-            duration: 2000,
-            success() {},
-        })
-        }
-      })
+    addToCart() {
+      if (!wx.getStorageSync("userinfo")) {
+        $wuxDialog().confirm({
+          resetOnClose: true,
+          closable: true,
+          title: "您还没有登陆",
+          content: "是否跳转到登陆页面",
+          onConfirm(e) {
+            wx.switchTab({
+              url: "/pages/me/main"
+            });
+          },
+          onCancel(e) {
+            return false;
+          }
+        });
+      } else {
+        postRequest("/cart/addgood", {
+          open_id: wx.getStorageSync("userinfo").openId,
+          good_id: this.goods.good_id,
+          goodnum: "1",
+          goodprice: this.goods.price.substr(0, 5)
+        }).then(res => {
+          if (res.data.message == "SUCCESS") {
+            $wuxToptips().success({
+              hidden: false,
+              text: "添加成功",
+              duration: 2000,
+              success() {}
+            });
+          }
+        });
+      }
     }
-  },
-
-}
+  }
+};
 </script>
 <style lang="less" scoped>
 .bookcardforshop-wrap {

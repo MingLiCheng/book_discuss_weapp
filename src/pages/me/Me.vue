@@ -9,7 +9,7 @@
         <open-data type="userNickName"></open-data>
       </div>
       <div class="user-qita">
-        <wux-button wux-class="user-login-btn" clear block v-show="!getIsLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">登录</wux-button>
+        <wux-button wux-class="user-login-btn" clear block v-if="!getIsLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">登录</wux-button>
       </div>
     </div>
     <div>
@@ -46,8 +46,7 @@ export default {
     // 判断用户是否的相关缓存
     if (wx.getStorageSync('userinfo')) {
       // 发生过授权
-      this.$store.dispatch('setIsLogin', false)
-
+      this.$store.dispatch('setIsLogin', true)
       // wx.switchTab({
       //   url: '/pages/me/main'
       // })
@@ -68,6 +67,7 @@ export default {
   },
   onShow(){
     console.log('个人中心页面显示--->onshow')
+    console.log('getIsLogin',this.getIsLogin)
   },
   mounted() {
     console.log('mounted')
@@ -81,7 +81,6 @@ export default {
       qcloud.login({
         success: function (userinfo) {
           wx.setStorageSync('userinfo', userinfo)
-          // _this.isLogin = true
           _this.$store.dispatch('setIsLogin', true)
           _this.$store.dispatch('setOpenId', userinfo.openId)
           _this.userInfo = userinfo

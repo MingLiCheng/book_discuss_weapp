@@ -8,16 +8,20 @@
       :duration='1000'
       :circular='true'
     >
-      <div :key='imgindex' v-for='(top,imgindex) in imgUrls'>
+      <div
+        :key='imgindex'
+        v-for='(top,imgindex) in imgUrls'
+      >
         <swiper-item>
+          <view class="image-box" v-for='img in top' :key='img.id'>
+          <view class="adv-fdlogo" v-if="img.adv_id">广告</view>
           <img
             @click='bookDetail(img)'
             class='slide-image'
             mode='aspectFit'
-            v-for='img in top'
-            :key='img.id'
             :src="img.image"
-            >
+          >
+          </view>
         </swiper-item>
       </div>
 
@@ -27,33 +31,48 @@
 
 <script>
 export default {
-  props: ['tops'],
+  props: ["tops"],
   computed: {
-    imgUrls () {
+    imgUrls() {
       // 如果通用 请用chunk函数  比如lodash的chunk方法
-      let res = this.tops
-      console.log([res.slice(0, 3), res.slice(3, 6), res.slice(6)])
-      return [res.slice(0, 3), res.slice(3, 6), res.slice(6)]
+      let res = this.tops;
+      console.log([res.slice(0, 3), res.slice(3, 6), res.slice(6)]);
+      return [res.slice(0, 3), res.slice(3, 6), res.slice(6)];
     }
   },
   methods: {
-    bookDetail (item) {
+    bookDetail(item) {
       wx.navigateTo({
-        url: '/pages/bookinfo/main?id=' + item.id
-      })
+        url: "/pages/bookinfo/main?id=" + item.id
+      });
     }
   }
-
-}
+};
 </script>
 <style lang='less'>
-.swiper{
+.swiper {
   box-sizing: border-box;
-  padding-top:5px;
+  padding-top: 5px;
   background-color: rgba(221, 224, 226, 0.959);
-  .slide-image{
-    width:33%;
-    height:250rpx;
+  .adv-fdlogo {
+    position: absolute;
+    width: 80rpx;
+    height: 40rpx;
+    background-color: rgb(34, 253, 89);
+    z-index: 11;
+    border-radius: 8rpx;
+    color: #f8f1f1;
+    text-align: center;
+    line-height: 40rpx;
+    font-weight: 500;
+  }
+  .image-box{
+    width: 33%;
+    display: inline-block;
+  }
+  .slide-image {
+    width: 100%;
+    height: 250rpx;
   }
 }
 </style>
