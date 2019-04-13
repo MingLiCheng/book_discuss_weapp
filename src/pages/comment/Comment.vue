@@ -3,13 +3,19 @@
     <div class="top-fixed-box">
       <div class="top-search-box">
         <div class="search-box-a">
-          <wux-search-bar clear maxlength="8" />
+          <wux-search-bar clear maxlength="8"/>
         </div>
         <div class="create-btn-box" @click="toNewComment">
-          <wux-icon type="ios-create" size="28" color="#0084ff" />
+          <wux-icon type="ios-create" size="28" color="#0084ff"/>
         </div>
       </div>
-      <wux-tabs wux-class="bordered" theme="assertive" controlled :current="current" @change="onTabsChange">
+      <wux-tabs
+        wux-class="bordered"
+        theme="assertive"
+        controlled
+        :current="current"
+        @change="onTabsChange"
+      >
         <block v-for="(tabItem,tabIndex) in tabs" :key="tabIndex">
           <wux-tab :key="tabItem.key" :title="tabItem.title"></wux-tab>
         </block>
@@ -18,47 +24,74 @@
     <div class="tab-item-wrap">
       <swiper :current="index" @change="onSwiperChange">
         <swiper-item>
-          <scroll-view scroll-y style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
-            scroll-into-view="footer-token" scroll-top="0">
-
-            <!-- 全部 -->
-            <CommentCard v-for="(commentItem, commentIndex) in comments" :key="commentIndex" :commentInfo="commentItem"></CommentCard>
-
-            <p id="footer-token" class="sfooter-box"></p>
-          </scroll-view>
-        </swiper-item>
-        <swiper-item>
-          <scroll-view scroll-y style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
-            scroll-into-view="footer-token" scroll-top="0">
-
+          <scroll-view
+            scroll-y
+            style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
+            scroll-into-view="footer-token"
+            scroll-top="0"
+          >
             <!-- 关注 -->
-            <CommentCard v-for="(commentItem, commentIndex) in comments" :key="commentIndex" :commentInfo="commentItem"></CommentCard>
+            <CommentCard
+              v-for="(collectItem, collectIndex) in myCollects"
+              :key="collectIndex"
+              :commentInfo="collectItem"
+            ></CommentCard>
+
             <p id="footer-token" class="sfooter-box"></p>
           </scroll-view>
         </swiper-item>
         <swiper-item>
-          <scroll-view scroll-y style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
-            scroll-into-view="footer-token" scroll-top="0">
-
+          <scroll-view
+            scroll-y
+            style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
+            scroll-into-view="footer-token"
+            scroll-top="0"
+          >
+            <!-- 推荐 -->
+            <CommentCard
+              v-for="(commentItem, commentIndex) in comments"
+              :key="commentIndex"
+              :commentInfo="commentItem"
+            ></CommentCard>
+            <p id="footer-token" class="sfooter-box"></p>
+          </scroll-view>
+        </swiper-item>
+        <swiper-item>
+          <scroll-view
+            scroll-y
+            style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
+            scroll-into-view="footer-token"
+            scroll-top="0"
+          >
             <!-- 热榜 -->
-            <CommentCard v-for="(commentItem, commentIndex) in comments" :key="commentIndex" :commentInfo="commentItem"></CommentCard>
+            <CommentCard
+              v-for="(commentItem, commentIndex) in comments"
+              :key="commentIndex"
+              :commentInfo="commentItem"
+            ></CommentCard>
 
             <p id="footer-token" class="sfooter-box"></p>
           </scroll-view>
         </swiper-item>
         <swiper-item>
-          <scroll-view scroll-y style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
-            scroll-into-view="footer-token" scroll-top="0">
-
+          <scroll-view
+            scroll-y
+            style="height: 100%; padding: 10px 5px 20px 5px; box-sizing: border-box;"
+            scroll-into-view="footer-token"
+            scroll-top="0"
+          >
             <!-- 我的 -->
-            <CommentCard v-for="(commentItem, commentIndex) in myComments" :key="commentIndex" :commentInfo="commentItem"></CommentCard>
+            <CommentCard
+              v-for="(commentItem, commentIndex) in myComments"
+              :key="commentIndex"
+              :commentInfo="commentItem"
+            ></CommentCard>
 
             <p id="footer-token" class="sfooter-box"></p>
           </scroll-view>
         </swiper-item>
       </swiper>
     </div>
-    <!-- <div class="fab-btn"><wux-icon type="ios-create" size="28" color="#0084ff"/></div> -->
   </section>
 </template>
 <script>
@@ -66,7 +99,7 @@ import CommentCard from "@/components/comment/CommentCard";
 import * as Api from "../../utils/request.js";
 export default {
   components: { CommentCard },
-  data() {
+  data () {
     return {
       current: "tab1",
       index: "0",
@@ -93,26 +126,27 @@ export default {
         }
       ],
       comments: [],
-      myComments:[],
-      openid:'',
+      myComments: [],
+      myCollects: [],
+      openid: '',
     };
   },
-  mounted() {
-    this.getAllcomment();
+  created () {
     this.openid = wx.getStorageSync("userinfo").openId
   },
-  onPullDownRefresh() {
-    this.getAllcomment();
+  mounted () {
+    this.getMyIssueByCollect()
+  },
+  onPullDownRefresh () {
+    this.getMyIssueByCollect()
   },
   methods: {
-    onTabsChange(e) {
-      console.log("onTabsChange", e);
+    onTabsChange (e) {
       const { key } = e.mp.detail;
       this.current = key;
       this.index = this.tabs.map(n => n.key).indexOf(key);
     },
-    onSwiperChange(e) {
-      console.log("onSwiperChange", e);
+    onSwiperChange (e) {
       const { current: index, source } = e.mp.detail;
       const { key } = this.tabs[index];
       if (!!source) {
@@ -123,24 +157,32 @@ export default {
         case 3:
           this.getMyComment()
           break;
+        case 1:
+          this.getAllcomment();
+          break;
 
         default:
           break;
       }
     },
-    async getAllcomment() {
-      const res = await Api.getRequest("/issue/list");
-      wx.stopPullDownRefresh();
-      console.log("comments", res);
+    async getAllcomment () {
+      const res = await Api.getRequest("/issue/list")
       this.comments = res.data.list;
     },
-    async getMyComment() {
+    async getMyComment () {
       const res = await Api.getRequest("/issue/list", {
         openid: this.openid
       });
       this.myComments = res.data.list
     },
-    toNewComment() {
+    async getMyIssueByCollect () {
+      const res = await Api.getRequest("/issue/collect", {
+        openid: this.openid
+      });
+      wx.stopPullDownRefresh();
+      this.myCollects = res.data.list
+    },
+    toNewComment () {
       wx.navigateTo({
         url: "/pages/newcomment/main"
       });

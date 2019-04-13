@@ -50,9 +50,6 @@ export default {
     } else {
     }
   },
-  onShow() {
-    console.log('首页显示-->onshow')
-  },
   onLoad() {
     this.getBookList(true)
     this.getTop()
@@ -84,9 +81,7 @@ export default {
       const tops = await Api.getRequest('/top')
       this.tops = tops.data.list
       const bookAdv = await Api.getRequest('/adv/listByTypeId', { typeId: 0 })
-      console.log('bookAdv', bookAdv.data.list)
       this.tops.splice(Math.floor(Math.random()*8+0) ,0,bookAdv.data.list[0])
-      console.log('this.topsxxxxxxxxxxxxxxxxxxxxx', this.tops)
       wx.stopPullDownRefresh()
     },
     async getBookList(init) {
@@ -118,7 +113,6 @@ export default {
     async getAdvBookList() {
       const res = await Api.getRequest('/adv/listByTypeId', { typeId: 0 })
       this.booklist = this.booklist.concat(res.data.list)
-      console.log('xxxx', this.booklist)
     }
   },
   computed: {

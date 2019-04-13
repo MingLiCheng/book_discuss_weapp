@@ -78,14 +78,14 @@
 <script>
 import { postRequest } from '../../utils/request.js'
 export default {
-  data() {
+  data () {
     return {
       isEdit: false,
       userInfo: {},
-      editInfo: {},
+      editInfo: {}
     }
   },
-  async mounted() {
+  async mounted () {
     const isLogin = this.$store.getters.getIsLogin
     // 判断用户有没有登陆，没有登陆 提示用户登陆
     if (!isLogin) {
@@ -94,7 +94,7 @@ export default {
         title: '提示',
         content: '请先登录',
         showCancel: false,
-        complete(res) {
+        complete (res) {
           wx.switchTab({
             url: '/pages/me/main'
           })
@@ -104,12 +104,10 @@ export default {
       this.userInfo = wx.getStorageSync('userinfo')
 
       await this.getUserInfoFromMy()
-
-
     }
   },
   methods: {
-    async getUserInfoFromMy() {
+    async getUserInfoFromMy () {
       postRequest('/userinfo', { openId: this.userInfo.openId }).then(res => {
         console.log('res', res)
         this.userInfo = {
@@ -120,19 +118,19 @@ export default {
         console.log('userInfo', this.userInfo)
       })
     },
-    changeToEdit() {
+    changeToEdit () {
       this.isEdit = true
     },
-    inputUsername(e) {
+    inputUsername (e) {
       this.editInfo.username = e.mp.detail
     },
-    inputEmail(e) {
+    inputEmail (e) {
       this.editInfo.email = e.mp.detail
     },
-    inputTel(e) {
+    inputTel (e) {
       this.editInfo.tel_num = e.mp.detail
     },
-    editUserInfo() {
+    editUserInfo () {
       let params = {
         open_id: wx.getStorageSync('userinfo').openId,
         username: this.editInfo.username,
@@ -150,12 +148,12 @@ export default {
           })
           setTimeout(() => {
             this.isEdit = false
-          }, 500);
+          }, 500)
 
         }
       })
     }
-  },
+  }
 }
 </script>
 <style lang="less" scoped>

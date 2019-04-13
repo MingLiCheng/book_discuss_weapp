@@ -9,11 +9,19 @@
         <open-data type="userNickName"></open-data>
       </div>
       <div class="user-qita">
-        <wux-button wux-class="user-login-btn" clear block v-if="!getIsLogin" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">登录</wux-button>
+        <wux-button
+          wux-class="user-login-btn"
+          clear
+          block
+          v-if="!getIsLogin"
+          open-type="getUserInfo"
+          lang="zh_CN"
+          @getuserinfo="doLogin"
+        >登录</wux-button>
       </div>
     </div>
     <div>
-    <YearProgress></YearProgress>
+      <YearProgress></YearProgress>
     </div>
     <div class="me-module-box">
       <wux-cell-group>
@@ -31,16 +39,16 @@ import YearProgress from '../../components/YearProgress'
 import qcloud from 'wafer2-client-sdk'
 import config from '../../config.js'
 import * as Api from '../../utils/request.js'
-import { mapMutations, mapGetters  } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 export default {
-  components:{ YearProgress },
-  data() {
+  components: { YearProgress },
+  data () {
     return {
       isLogin: false,
       userInfo: {}
     }
   },
-  created() {
+  created () {
     this.userInfo = wx.getStorageSync('userinfo')
     console.log('me-userinfo', this.userInfo)
     // 判断用户是否的相关缓存
@@ -51,30 +59,30 @@ export default {
       //   url: '/pages/me/main'
       // })
     } else {
-       this.$store.dispatch('setIsLogin', false)
+      this.$store.dispatch('setIsLogin', false)
     }
   },
-  onLoad(){
+  onLoad () {
     console.log('个人中心页面加载-->onLoad')
     console.log('getisLogin', this.getIsLogin)
     // 判断是否为登陆状态
-    if(!this.getIsLogin){
+    if (!this.getIsLogin) {
 
     }
   },
-  onUnload(){
+  onUnload () {
     console.log('onUnload')
   },
-  onShow(){
+  onShow () {
     console.log('个人中心页面显示--->onshow')
-    console.log('getIsLogin',this.getIsLogin)
+    console.log('getIsLogin', this.getIsLogin)
   },
-  mounted() {
+  mounted () {
     console.log('mounted')
     this.userInfo = wx.getStorageSync('userinfo')
   },
   methods: {
-    doLogin() {
+    doLogin () {
       console.log('config.loginUrl', config.loginUrl)
       qcloud.setLoginUrl(config.loginUrl)
       const _this = this
@@ -99,7 +107,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getIsLogin'])
-  },
+  }
 }
 </script>
 <style lang="less">
@@ -134,9 +142,9 @@ export default {
       justify-content: center;
       align-items: center;
       color: #ffffff;
-      .user-login-btn{
+      .user-login-btn {
         color: #ffffff;
-        }
+      }
     }
   }
   .me-module-box {

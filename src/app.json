@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/home/main",
     "pages/comment/main",
     "pages/newcomment/main",
     "pages/me/main",
-    "pages/home/main",
     "pages/bookinfo/main",
     "pages/shop/main",
     "pages/mybookbox/main",
@@ -13,6 +13,7 @@
     "pages/goodsinfo/main",
     "pages/address/main",
     "pages/cart/main",
+    "pages/order/main",
     "pages/logs/main"
   ],
   "permission": {
@@ -27,34 +28,35 @@
     "navigationBarTextStyle": "white",
     "backgroundColor": "#EA5149"
   },
- "tabBar": {
-   "color": "#a9b7b7",
-   "selectedColor": "#EA5149",
-   "borderStyle": "black",
-   "list": [{
-       "selectedIconPath": "./static/images/index/book-active.png",
-       "iconPath": "./static/images/index/book.png",
-       "pagePath": "pages/home/main",
-       "text": "首页"
-     },
-     {
-       "selectedIconPath": "./static/images/index/comment-active.png",
-       "iconPath": "./static/images/index/comment.png",
-       "pagePath": "pages/comment/main",
-       "text": "消息"
-     },
-     {
-       "selectedIconPath": "./static/images/index/shop-active.png",
-       "iconPath": "./static/images/index/shop.png",
-       "pagePath": "pages/shop/main",
-       "text": "商城"
-     },
-     {
-       "selectedIconPath": "./static/images/index/me-active.png",
-       "iconPath": "./static/images/index/me.png",
-       "pagePath": "pages/me/main",
-       "text": "我的"
-     }
-   ]
- }
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#EA5149",
+    "borderStyle": "black",
+    "list": [
+      {
+        "selectedIconPath": "./static/images/index/book-active.png",
+        "iconPath": "./static/images/index/book.png",
+        "pagePath": "pages/home/main",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "./static/images/index/comment-active.png",
+        "iconPath": "./static/images/index/comment.png",
+        "pagePath": "pages/comment/main",
+        "text": "消息"
+      },
+      {
+        "selectedIconPath": "./static/images/index/shop-active.png",
+        "iconPath": "./static/images/index/shop.png",
+        "pagePath": "pages/shop/main",
+        "text": "商城"
+      },
+      {
+        "selectedIconPath": "./static/images/index/me-active.png",
+        "iconPath": "./static/images/index/me.png",
+        "pagePath": "pages/me/main",
+        "text": "我的"
+      }
+    ]
+  }
 }

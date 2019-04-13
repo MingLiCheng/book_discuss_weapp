@@ -18,16 +18,18 @@ export default {
   data() {
     return {
       bookid: '',
-      book: {}
+      book: {},
+      openid: ''
     }
   },
   mounted() {
+    this.openid = wx.getStorageSync('userinfo').openId
     this.bookid = this.$root.$mp.query.id
     this.getBookInfoById()
   },
   methods: {
     async getBookInfoById() {
-      await getRequest('/bookdetail', { id: `${this.bookid}` }).then(res => {
+      await getRequest('/bookdetail', { id: `${this.bookid}`, openid: `${this.openid}` }).then(res => {
         wx.setNavigationBarTitle({
           title: res.data.title
         })

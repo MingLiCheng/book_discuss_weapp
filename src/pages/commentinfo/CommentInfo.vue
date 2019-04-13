@@ -3,7 +3,16 @@
     <wux-popup position="bottom" :visible="visible2" @close="Close2">
       <wux-cell-group wux-class="textarea-cell">
         <wux-cell hover-class="none" title="评论">
-          <wux-textarea @change="onChange" controlled :value="content" autoHeight hasCount rows="5" cursorSpacing="80" placeholder="Count..." />
+          <wux-textarea
+            @change="onChange"
+            controlled
+            :value="content"
+            autoHeight
+            hasCount
+            rows="5"
+            cursorSpacing="80"
+            placeholder="Count..."
+          />
         </wux-cell>
         <wux-cell hover-class="none">
           <wux-button block type="balanced" @click="save" @tap="close2">保存</wux-button>
@@ -25,11 +34,16 @@
     <div class="operate">
       <div class="create">
         <wux-button clear type="positive" @click="open2">
-          <wux-icon type="ios-create" size="16" /> 写评论</wux-button>
+          <wux-icon type="ios-create" size="16"/>写评论
+        </wux-button>
       </div>
       <div class="collect">
-        <wux-button clear type="positive">
-          <wux-icon type="ios-star-outline" size="18" /> 收藏</wux-button>
+        <wux-button v-if="comment.isCollect == 0" clear type="positive" @click="setCollect(1)">
+          <wux-icon type="ios-star-outline" size="18"/>收藏
+        </wux-button>
+        <wux-button v-if="comment.isCollect != 0" clear type="positive" @click="setCollect(0)">
+          <wux-icon type="ios-star" size="18"/>已收藏
+        </wux-button>
       </div>
     </div>
     <div class="hr"></div>
@@ -45,7 +59,7 @@ export default {
   components: {
     CommenTwoLev
   },
-  data() {
+  data () {
     return {
       commentId: "",
       comment: {},
@@ -57,15 +71,30 @@ export default {
       comments: []
     };
   },
-  async mounted() {
+  async mounted () {
     this.commentId = this.$root.$mp.query.commentId;
     await this.getIssueInfoById();
     await this.getCommentByIssue()
   },
   methods: {
-    async getIssueInfoById() {
+    async setCollect (iscollect) {
+      const res = await postRequest('/collect/set', {
+        isCollect: iscollect,
+        openid: wx.getStorageSync('userinfo').openId,
+        issueid: this.comment.id
+      })
+      if (res.data.message === 'SUCCESS') {
+        this.comment.isCollect = iscollect == 1 ? 1 : 0
+      } else {
+        wx.showToast({
+          title: '失败'
+        })
+      }
+    },
+    async getIssueInfoById () {
       getRequest("/issue/detail", {
-        issueId: this.commentId
+        issueId: this.commentId,
+        openid: wx.getStorageSync('userinfo').openId
       }).then(res => {
         console.log("res", res);
         this.comment = res.data.detail;
@@ -76,22 +105,22 @@ export default {
         };
       });
     },
-    async getCommentByIssue() {
+    async getCommentByIssue () {
       const res = await getRequest("/comment/list", {
         issue_id: this.commentId
       });
       this.comments = res.data.list
     },
-    open2() {
+    open2 () {
       this.visible2 = true;
     },
-    Close2() {
+    Close2 () {
       this.visible2 = false;
     },
-    onChange(e) {
+    onChange (e) {
       this.content = e.mp.detail.value;
     },
-    async save() {
+    async save () {
       // 判断是否登陆
       if (!wx.getStorageSync("userinfo").openId) {
         wx.showToast({

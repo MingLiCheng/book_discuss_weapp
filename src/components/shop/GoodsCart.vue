@@ -25,31 +25,30 @@
 </template>
 
 <script>
-import { getRequest, postRequest } from "@/utils/request.js";
+import { getRequest, postRequest } from '@/utils/request.js'
 import { $wuxDialog } from '../../../static/wux/index'
 export default {
-  data() {
+  data () {
     return {
     }
   },
   props: ['cart'],
   computed: {
-    goodprice() {
+    goodprice () {
       return this.cart.goodprice.toFixed(2)
     }
   },
   methods: {
-    onClickButton() {
-      console.log('点击按钮');
+    onClickButton () {
+      console.log('点击按钮')
     },
-    onClickLink() {
-      console.log('修改地址');
-
+    onClickLink () {
+      console.log('修改地址')
     },
-    onChange(e) {
+    onChange (e) {
       // 当要改变数量的时候就发送请求---->成功后 的到反馈在改变？
 
-      if (e.mp.detail.value == 0) {
+      if (e.mp.detail.value === 0) {
         // 提示是否删除该商品
         $wuxDialog().confirm({
           resetOnClose: true,
@@ -63,14 +62,13 @@ export default {
               cart_id: this.cart.cart_id
             }).then(res => {
               console.log('res', res)
-              this.$parent.getCartlist();
+              this.$parent.getCartlist()
             })
-
           },
           onCancel: (e) => {
             console.log('谢谢你不吃之恩！')
             return false
-          },
+          }
         })
       } else {
         this.cart.goodnum = e.mp.detail.value
@@ -83,9 +81,7 @@ export default {
           console.log('res', res)
         })
       }
-
-
-    },
+    }
   }
 }
 </script>

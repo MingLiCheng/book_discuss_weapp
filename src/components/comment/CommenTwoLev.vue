@@ -27,7 +27,7 @@
           <img :src="childItem.user_info.avatarUrl" alt>
         </div>
         <div class="username-box"><span>{{ childItem.user_info.nickName }}</span> <span>回复：{{ userinfo.nickName }}</span> <span
-            class="reply" v-if="!childItem.openid == openid" @click="openReply">回复</span>
+            class="reply" v-if="childItem.openid != openid" @click="openReply">回复</span>
           <span v-if="childItem.openid == openid" class="del" @click="delCommentById(childItem.id)">删除</span></div>
       </div>
       <div class="crad-body">

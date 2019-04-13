@@ -1,31 +1,31 @@
 const state = {
   account: '',
   isLogin: false,
-  openId: '',
+  openId: ''
 }
 
 const mutations = {
-  SET_ACCOUNT(state, value) {
+  SET_ACCOUNT (state, value) {
     state.account = value
   },
-  SET_ISLOGIN(state, value) {
+  SET_ISLOGIN (state, value) {
     state.isLogin = value
   },
-  SET_OPENID(state, value) {
+  SET_OPENID (state, value) {
     state.openId = value
   }
 }
 
 const actions = {
-  setAccount({
+  setAccount ({
     commit
   }, value) {
     commit('SET_ACCOUNT', value)
   },
-  setIsLogin({commit}, value) {
+  setIsLogin ({commit}, value) {
     commit('SET_ISLOGIN', value)
   },
-  setOpenId({commit}, value) {
+  setOpenId ({commit}, value) {
     commit('SET_OPENID', value)
   }
 }

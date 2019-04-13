@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>这是商品详细信息页面 书本id{{ bookId }},商品ID {{ goodId }}</h1>
     <BookInfo :book="book"></BookInfo>
     <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服"/>
