@@ -27,13 +27,13 @@
       </div>
     </div>
 
-    <wux-toptips id="wux-toptips" />
+    <wux-toast id="wux-toast"/>
     <wux-dialog id="wux-dialog" />
   </section>
 </template>
 <script>
 import { getRequest, postRequest } from "@/utils/request.js";
-import { $wuxToptips, $wuxDialog } from "../../static/wux/index";
+import { $wuxToast, $wuxDialog } from "../../static/wux/index";
 export default {
   data() {
     return {};
@@ -73,12 +73,13 @@ export default {
           goodprice: this.goods.price.substr(0, 5)
         }).then(res => {
           if (res.data.message == "SUCCESS") {
-            $wuxToptips().success({
-              hidden: false,
-              text: "添加成功",
-              duration: 2000,
-              success() {}
-            });
+            $wuxToast().show({
+              type: 'success',
+              duration: 1500,
+              color: '#EA5149',
+              text: '添加成功',
+              success: () => console.log('添加成功')
+            })
           }
         });
       }

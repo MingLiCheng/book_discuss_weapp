@@ -2,6 +2,7 @@
   "pages": [
     "pages/home/main",
     "pages/comment/main",
+    "pages/commentinfo/main",
     "pages/newcomment/main",
     "pages/me/main",
     "pages/bookinfo/main",

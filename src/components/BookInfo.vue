@@ -72,13 +72,17 @@ export default {
       this.rex = 1
     },
     async setCollect (iscollect) {
+      console.log('111');
       const res = await postRequest('/collect/set', {
         isCollect: iscollect,
         openid: wx.getStorageSync('userinfo').openId,
         bookid: this.book.id
       })
-      if(res.data.message==='SUCCESS'){
-        this.book.isCollect = iscollect == 1 ? 1 : 0
+      console.log('xxx');
+      
+      if(res.data.message == 'SUCCESS'){
+        this.book.isCollect = iscollect
+        console.log('xx', this.book.isCollect)
       }else{
         wx.showToast({
           title:'失败'

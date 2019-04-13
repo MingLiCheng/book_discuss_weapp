@@ -16,6 +16,7 @@
     "wux-tabs": "../../static/wux/tabs/index",
     "wux-tab": "../../static/wux/tab/index",
     "wux-accordion-group": "../../static/wux/accordion-group/index",
-    "wux-accordion": "../../static/wux/accordion/index"
+    "wux-accordion": "../../static/wux/accordion/index",
+    "wux-toast": "../../static/wux/toast/index"
   }
 }

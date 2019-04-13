@@ -21,7 +21,7 @@
 <script>
 import BookCardForShop from '@/components/BookCardForShop.vue'
 import FabButton from '@/components/FabButton.vue'
-import GoodsCart from "../../components/shop/GoodsCart.vue";
+import GoodsCart from "../../components/shop/GoodsCart.vue"
 import * as Api from '../../utils/request.js'
 
 
