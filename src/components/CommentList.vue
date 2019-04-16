@@ -17,8 +17,6 @@ export default {
   },
   methods: {
     testForLoc(e) {
-      console.log('e', e)
-      console.log('testLoc')
       // Qelgt6dq77qc16qz9Szx8qcr5S5KkKPS
       // http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=35.658651,139.745415&output=json&pois=1&ak=您的ak //GET请求
       const baidumapToken = 'Qelgt6dq77qc16qz9Szx8qcr5S5KkKPS'

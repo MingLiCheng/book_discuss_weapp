@@ -7,6 +7,7 @@
     "van-field": "../../static/vant/field/index",
     "van-cell": "../../static/vant/cell/index",
     "van-icon": "../../static/vant/icon/index",
-    "van-button": "../../static/vant/button/index"
+    "van-button": "../../static/vant/button/index",
+    "wux-dialog": "../../static/wux/dialog/index"
   }
 }

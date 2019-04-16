@@ -1,12 +1,13 @@
 {
   "pages": [
+    "pages/shop/main",
+    "pages/myorder/main",
     "pages/home/main",
     "pages/comment/main",
     "pages/commentinfo/main",
     "pages/newcomment/main",
     "pages/me/main",
     "pages/bookinfo/main",
-    "pages/shop/main",
     "pages/mybookbox/main",
     "pages/mycollect/main",
     "pages/mycommentmessage/main",
@@ -15,6 +16,7 @@
     "pages/address/main",
     "pages/cart/main",
     "pages/order/main",
+    "pages/addaddress/main",
     "pages/logs/main"
   ],
   "permission": {

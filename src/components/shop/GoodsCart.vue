@@ -47,7 +47,6 @@ export default {
     },
     onChange (e) {
       // 当要改变数量的时候就发送请求---->成功后 的到反馈在改变？
-
       if (e.mp.detail.value === 0) {
         // 提示是否删除该商品
         $wuxDialog().confirm({
@@ -61,12 +60,10 @@ export default {
               goodprice: this.cart.goodprice,
               cart_id: this.cart.cart_id
             }).then(res => {
-              console.log('res', res)
               this.$parent.getCartlist()
             })
           },
           onCancel: (e) => {
-            console.log('谢谢你不吃之恩！')
             return false
           }
         })
@@ -78,7 +75,6 @@ export default {
           goodprice: this.cart.goodprice,
           cart_id: this.cart.cart_id
         }).then(res => {
-          console.log('res', res)
         })
       }
     }
@@ -87,7 +83,6 @@ export default {
 </script>
 <style lang="less" >
 .van-submit-bar {
-  /* position: relative !important; */
   bottom: 0px;
 }
 .edit-address {

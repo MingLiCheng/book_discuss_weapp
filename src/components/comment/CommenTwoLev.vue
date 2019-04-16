@@ -98,7 +98,6 @@ export default {
         });
         this.visible2 = false;
         this.content = "";
-        console.log('this', this)
         this.getTheChildComments()
       }
     },
@@ -112,9 +111,7 @@ export default {
       const res = await getRequest('/comment/delById', {
         comment_id: id
       })
-      console.log('res', res);
       if(res.data.message == 'SUCCESS') {
-        console.log('删除成功');
         this.$parent.getCommentByIssue()
         this.getTheChildComments()
       }

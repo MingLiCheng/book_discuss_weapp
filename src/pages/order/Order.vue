@@ -75,7 +75,6 @@ export default {
   onShow(){
     this.addressId = wx.getStorageSync('addressId')
     wx.removeStorageSync('addressId')
-    console.log('this.addressId', this.addressId);
     if(this.addressId) {
       this.getAddress(this.addressId)
     }
@@ -109,7 +108,6 @@ export default {
       this.$wuxLoading.hide()
     },
     test () {
-      console.log('ceshi')
       this.countPrice = 1000
     },
     onClickButton () {
@@ -123,13 +121,11 @@ export default {
         count += v.goodprice * v.goodnum
       })
       this.countPrice = count * 100
-      console.log('zhixing 计算', this.countPrice, this.carts)
     },
     async getCartlist () {
       getRequest('/cart/list', {
         openId: wx.getStorageSync('userinfo').openId
       }).then(res => {
-        console.log('res', res)
         this.carts = res.data.carts
         this.compentedCountPrice()
       })

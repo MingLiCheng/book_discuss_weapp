@@ -1,0 +1,10 @@
+{
+    "usingComponents": {
+      "wux-icon": "../../static/wux/icon/index",
+      "wux-button": "../../static/wux/button/index",
+      "wux-tabs": "../../static/wux/tabs/index",
+      "wux-tab": "../../static/wux/tab/index",
+      "van-button": "../../static/vant/button/index",
+      "van-card": "../../static/vant/card/index"
+    }
+}

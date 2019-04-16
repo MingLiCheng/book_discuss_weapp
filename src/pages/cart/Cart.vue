@@ -26,11 +26,9 @@ export default {
   },
   methods: {
     test () {
-      console.log('ceshi')
       this.countPrice = 1000
     },
     onClickButton () {
-      console.log('点击按钮')
       // 结算生成订单
       wx.navigateTo({
         url: '/pages/order/main'
@@ -42,13 +40,11 @@ export default {
         count += v.goodprice * v.goodnum
       })
       this.countPrice = count * 100
-      console.log('zhixing 计算', this.countPrice, this.carts)
     },
     async getCartlist () {
       getRequest('/cart/list', {
         openId: wx.getStorageSync('userinfo').openId
       }).then(res => {
-        console.log('res', res)
         this.carts = res.data.carts
         this.compentedCountPrice()
       })

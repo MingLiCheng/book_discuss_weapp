@@ -109,13 +109,11 @@ export default {
   methods: {
     async getUserInfoFromMy () {
       postRequest('/userinfo', { openId: this.userInfo.openId }).then(res => {
-        console.log('res', res)
         this.userInfo = {
           ...this.userInfo,
           ...res.data.userinfo
         }
         this.editInfo = res.data.userinfo
-        console.log('userInfo', this.userInfo)
       })
     },
     changeToEdit () {
@@ -137,7 +135,6 @@ export default {
         tel_num: this.editInfo.tel_num,
         email: this.editInfo.email
       }
-      console.log('params', params)
       postRequest('/user/edituserinfo', params).then(res => {
         if (res.data.message == 'SUCCESS') {
           this.getUserInfoFromMy()

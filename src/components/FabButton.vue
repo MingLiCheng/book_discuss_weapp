@@ -27,10 +27,10 @@ const buttons = [{
   className: 'fubtn_two',
   icon: cartIcon
 },
-{
-  className: 'fubtn_three',
-  icon: homeIcon
-}
+// {
+//   className: 'fubtn_three',
+//   icon: homeIcon
+// }
 ]
 export default {
   data() {
@@ -45,23 +45,14 @@ export default {
       })
     },
     onClick(e) {
-      console.log('e', e.mp.detail)
-      if (e.mp.detail.index === 2) {
-        console.log('首页')
-        wx.switchTab({
-          url: '/pages/shop/main'
-        })
-      }
       if (e.mp.detail.index === 1) {
-        console.log('购物车')
         wx.navigateTo({
           url: '/pages/cart/main'
         })
       }
       if (e.mp.detail.index === 0) {
-        console.log('订单')
         wx.navigateTo({
-          url: '/pages/cart/main'
+          url: '/pages/myorder/main'
         })
       }
     },

@@ -50,7 +50,6 @@ export default {
   },
   created () {
     this.userInfo = wx.getStorageSync('userinfo')
-    console.log('me-userinfo', this.userInfo)
     // 判断用户是否的相关缓存
     if (wx.getStorageSync('userinfo')) {
       // 发生过授权
@@ -63,27 +62,17 @@ export default {
     }
   },
   onLoad () {
-    console.log('个人中心页面加载-->onLoad')
-    console.log('getisLogin', this.getIsLogin)
-    // 判断是否为登陆状态
-    if (!this.getIsLogin) {
-
-    }
   },
   onUnload () {
     console.log('onUnload')
   },
   onShow () {
-    console.log('个人中心页面显示--->onshow')
-    console.log('getIsLogin', this.getIsLogin)
   },
   mounted () {
-    console.log('mounted')
     this.userInfo = wx.getStorageSync('userinfo')
   },
   methods: {
     doLogin () {
-      console.log('config.loginUrl', config.loginUrl)
       qcloud.setLoginUrl(config.loginUrl)
       const _this = this
       qcloud.login({

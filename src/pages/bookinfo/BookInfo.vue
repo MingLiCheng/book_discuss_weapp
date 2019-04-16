@@ -34,7 +34,6 @@ export default {
           title: res.data.title
         })
         this.book = res.data
-        console.log('getBookInfoById,res', res)
       })
 
     }

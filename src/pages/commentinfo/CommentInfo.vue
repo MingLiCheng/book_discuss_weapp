@@ -96,7 +96,6 @@ export default {
         issueId: this.commentId,
         openid: wx.getStorageSync('userinfo').openId
       }).then(res => {
-        console.log("res", res);
         this.comment = res.data.detail;
         this.book = {
           image: res.data.detail.image,

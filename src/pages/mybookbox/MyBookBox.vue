@@ -34,7 +34,6 @@ export default {
           showModal('添加成功', `${res.data.title}添加成功`)
         }
       } catch (error) {
-        console.log('error',error)
         if(error.data.msg == '图书已存在'){
           showModal('添加失败', `图书已存在`)
         }else{
