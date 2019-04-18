@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/home/main",
+    "pages/search/main",
     "pages/shop/main",
     "pages/myorder/main",
-    "pages/home/main",
     "pages/comment/main",
     "pages/commentinfo/main",
     "pages/newcomment/main",

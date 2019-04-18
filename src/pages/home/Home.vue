@@ -1,6 +1,10 @@
 <template>
   <section class="home-wrap">
-    <wux-search-bar clear maxlength="8"/>
+    <div class="search-bar">
+      <div class="wrap" @click="onFocus">
+        <wux-icon size="19" type="ios-search" color="#B2B2B2"/><span>搜索</span>
+      </div>
+    </div>
     <TopSwiper :tops="tops"></TopSwiper>
     <div class="classify-nav">
       <wux-tabs controlled scroll :current="tabCurrent" @change="onTabsChange($event)">
@@ -27,7 +31,7 @@ import BookCard from '@/components/BookCard'
 import { mapGetters, mapState } from 'vuex';
 export default {
   components: { TopSwiper, BookCard },
-  data() {
+  data () {
     return {
       tabCurrent: 'tab1',
       tops: [],
@@ -37,7 +41,7 @@ export default {
       more: true,
     }
   },
-  created() {
+  created () {
     Api.getRequest('/test').then(res => {
       console.log('远程接口 is running', res)
     })
@@ -50,15 +54,15 @@ export default {
     } else {
     }
   },
-  onLoad() {
+  onLoad () {
     this.getBookList(true)
     this.getTop()
   },
-  onPullDownRefresh() {
+  onPullDownRefresh () {
     this.getTop()
     this.getBookList(true)
   },
-  onReachBottom() {
+  onReachBottom () {
     if (!this.more) {
       // 没有更多了
       return false
@@ -66,25 +70,30 @@ export default {
     this.page = this.page + 1
     this.getBookList()
   },
-  updated() {
+  updated () {
   },
   methods: {
-    onTabsChange(e) {
+    onFocus (e) {
+      wx.navigateTo({
+        url: "/pages/search/main"
+      })
+    },
+    onTabsChange (e) {
       this.tabCurrent = e.mp.detail.key
-      if(this.tabCurrent != 'tab1'){
+      if (this.tabCurrent != 'tab1') {
         this.getBookByType(this.tabCurrent)
-      }else{
-         this.getBookList(true)
+      } else {
+        this.getBookList(true)
       }
     },
-    async getTop() {
+    async getTop () {
       const tops = await Api.getRequest('/top')
       this.tops = tops.data.list
       const bookAdv = await Api.getRequest('/adv/listByTypeId', { typeId: 0 })
-      this.tops.splice(Math.floor(Math.random()*8+0) ,0,bookAdv.data.list[0])
+      this.tops.splice(Math.floor(Math.random() * 8 + 0), 0, bookAdv.data.list[0])
       wx.stopPullDownRefresh()
     },
-    async getBookList(init) {
+    async getBookList (init) {
       if (init) {
         this.page = 0
         this.more = true
@@ -105,12 +114,12 @@ export default {
       }
       wx.hideNavigationBarLoading()
     },
-    async getBookByType(type) {
+    async getBookByType (type) {
       const list = await Api.getRequest('/book/getBooklistByType', { type })
       this.booklist = list.data.list
     },
     // 获取广告的列表
-    async getAdvBookList() {
+    async getAdvBookList () {
       const res = await Api.getRequest('/adv/listByTypeId', { typeId: 0 })
       this.booklist = this.booklist.concat(res.data.list)
     }
@@ -122,6 +131,31 @@ export default {
 </script>
 <style lang="less">
 .home-wrap {
+  .search-bar {
+    height: 88rpx;
+    padding: 16rpx 20rpx;
+    box-sizing: border-box;
+    display: flex;
+    background-color: #efeff4;
+    .wrap {
+      position: relative;
+      width: 100%;
+      height: 56rpx;
+      overflow: hidden;
+      background-color: #fff;
+      flex: 1;
+      background-clip: padding-box;
+      border-radius: 6rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 33rpx;
+      color: rgb(170, 169, 169);
+      span{
+        margin-left: 10rpx;
+      }
+    }
+  }
   .test-model {
     height: 100rpx;
     width: 100%;
@@ -143,10 +177,10 @@ export default {
   .book-image {
     width: 200rpx;
   }
-  .no-more-msg{
-    text-align:center;
-    font-size:24rpx;
-    color:rgb(172, 166, 166);
+  .no-more-msg {
+    text-align: center;
+    font-size: 24rpx;
+    color: rgb(172, 166, 166);
   }
 }
 </style>

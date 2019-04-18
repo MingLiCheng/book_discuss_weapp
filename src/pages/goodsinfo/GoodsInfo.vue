@@ -2,10 +2,10 @@
   <div>
     <BookInfo :book="book"></BookInfo>
     <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服"/>
+      <!-- <van-goods-action-icon icon="chat-o" text="客服"/> -->
       <van-goods-action-icon icon="cart-o" @click="toCart" text="购物车" info="5"/>
       <van-goods-action-button text="加入购物车" @click="addToCart" type="warning"/>
-      <van-goods-action-button text="立即购买"/>
+      <van-goods-action-button @click="toBuy" text="立即购买"/>
     </van-goods-action>
     <wux-toast id="wux-toast"/>
     <wux-dialog id="wux-dialog"/>
@@ -39,8 +39,14 @@ export default {
         url: '/pages/cart/main'
       })
     },
-    onClickIcon () {
-      console.log('点击图标');
+    toBuy () {
+      $wuxToast().show({
+        type: 'cancel',
+        duration: 1500,
+        color: '#EA5149',
+        text: '暂时不支持，请加入购物车后结算',
+        success: () => console.log('点击直接购买')
+      })
     },
     onClickButton () {
       console.log('点击按钮');
