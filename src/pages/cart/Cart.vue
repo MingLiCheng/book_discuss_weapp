@@ -20,8 +20,7 @@ export default {
       countPrice: ''
     }
   },
-
-  mounted () {
+  onShow(){
     this.getCartlist()
   },
   methods: {
@@ -29,6 +28,13 @@ export default {
       this.countPrice = 1000
     },
     onClickButton () {
+      if(this.countPrice <=0 ){
+        wx.showToast({
+          title:'请添加商品后在结算',
+          icon:'none'
+        })
+        return false
+      }
       // 结算生成订单
       wx.navigateTo({
         url: '/pages/order/main'

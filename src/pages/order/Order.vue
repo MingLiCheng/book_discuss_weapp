@@ -178,10 +178,10 @@ export default {
         duration: 2000,
       })
       setTimeout(() => {
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/pages/myorder/main'
         })
-      }, 1300);
+      }, 500);
 
     },
     openPlain () {
@@ -192,7 +192,7 @@ export default {
           duration: 2000,
         })
         setTimeout(() => {
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/myorder/main'
           })
         }, 1000);
