@@ -14,6 +14,7 @@
     "wux-loading": "../../static/wux/loading/index",
     "wux-popup": "../../static/wux/popup/index",
     "wux-cell-group": "../../static/wux/cell-group/index",
-    "wux-cell": "../../static/wux/cell/index"
+    "wux-cell": "../../static/wux/cell/index",
+    "wux-keyboard": "../../static/wux/keyboard/index"
   }
 }

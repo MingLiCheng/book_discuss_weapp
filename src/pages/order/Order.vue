@@ -1,13 +1,23 @@
 <template>
   <section class="order-wrap">
-    <wux-popup position="bottom" :visible="visible" @close="closePopup">
-      <wux-cell-group title="Your fathers">
-        <wux-cell hover-class="none" title="Jack Ma"></wux-cell>
-        <wux-cell hover-class="none" title="Pony"></wux-cell>
-        <wux-cell hover-class="none">
-          <wux-button block type="balanced" @tap="closePopup">Yes</wux-button>
-        </wux-cell>
-      </wux-cell-group>
+    <wux-popup position="bottom" :visible="visible">
+      <div class="pay-wrap">
+        <div class="opeartion-wrap">
+          <span @click="canclePay">取消</span>
+          <span class="title">确认支付</span>
+        </div>
+        <div class="money-wrap">
+          <div class="title">payment</div>
+          <div class="money">￥{{ countPrice }}</div>
+        </div>
+        <div class="payee-wrap">
+          <span>收款方</span>
+          <span>思多多</span>
+        </div>
+        <div class="save-wrap">
+          <div class="save-btn" @click="openPlain">立即支付</div>
+        </div>
+      </div>
     </wux-popup>
     <div class="address-box">
       <van-cell
@@ -39,14 +49,16 @@
       custom-class="van-submit-bar"
       safe-area-inset-bottom="false"
     />
+
     <wux-loading id="wux-loading"/>
+    <wux-keyboard id="wux-keyboard"/>
   </section>
 </template>
 <script>
 import GoodsCart from '@/components/shop/GoodsCart.vue'
 import FabButton from '@/components/FabButton.vue'
 import { getRequest, postRequest } from '@/utils/request.js'
-import { $wuxLoading } from '../../../static/wux/index.js'
+import { $wuxLoading, $wuxKeyBoard } from '../../../static/wux/index.js'
 export default {
   components: {
     GoodsCart,
@@ -58,11 +70,11 @@ export default {
       countPrice: '',
       openid: '',
       visible: false,
-      addressId:'',
-      address:''
+      addressId: '',
+      address: ''
     }
   },
-  created() {
+  created () {
     this.openid = wx.getStorageSync('userinfo').openId
   },
   mounted () {
@@ -72,30 +84,30 @@ export default {
     this.getCartlist()
     this.getAddress(false)
   },
-  onShow(){
+  onShow () {
     this.addressId = wx.getStorageSync('addressId')
     wx.removeStorageSync('addressId')
-    if(this.addressId) {
+    if (this.addressId) {
       this.getAddress(this.addressId)
     }
   },
   methods: {
-    async getAddress(id){
-      if(!id){
+    async getAddress (id) {
+      if (!id) {
         // 默认加载
         const res = await getRequest('/address/get', {
           openid: this.openid
         })
         this.address = res.data.info
-      }else{
+      } else {
         // 根据id加载
-        const res = await getRequest('/address/get',{
+        const res = await getRequest('/address/get', {
           addressId: this.addressId
         })
         this.address = res.data.info
       }
     },
-    closePopup(){
+    closePopup () {
       this.visible = false
     },
     showLoading () {
@@ -120,7 +132,7 @@ export default {
       this.carts.forEach(v => {
         count += v.goodprice * v.goodnum
       })
-      this.countPrice = count * 100
+      this.countPrice = count * 100 
     },
     async getCartlist () {
       getRequest('/cart/list', {
@@ -148,14 +160,66 @@ export default {
         })
       } else {
         // 成功
+        this.countPrice = (res.data.count).toFixed(2)
         this.hideLoading()
         this.toPay()
       }
     },
     // 弹出支付接口
-    async toPay() {
+    async toPay () {
       this.visible = true
-    }
+    },
+    // 取消支付
+    canclePay () {
+      this.visible = false
+      wx.showToast({
+        title: '取消支付',
+        icon: "none",
+        duration: 2000,
+      })
+      setTimeout(() => {
+        wx.navigateTo({
+          url: '/pages/myorder/main'
+        })
+      }, 1300);
+
+    },
+    openPlain () {
+      const fn = (title, status) => {
+        wx.hideLoading()
+        wx.showToast({
+          title,
+          duration: 2000,
+        })
+        setTimeout(() => {
+          wx.navigateTo({
+            url: '/pages/myorder/main'
+          })
+        }, 1000);
+
+      }
+
+      $wuxKeyBoard().show({
+        className: 'className',
+        titleText: '安全键盘',
+        cancelText: '取消',
+        inputText: '输入数字密码',
+        showCancel: true,
+        disorder: false,
+        maxlength: 6,
+        callback (value) {
+          console.log(`输入的密码是：${value}`)
+
+          wx.showLoading({
+            title: '验证支付密码'
+          })
+
+          return new Promise((resolve, reject) => {
+            setTimeout(() => Math.ceil(Math.random() * 10) >= 6 ? resolve(fn('密码正确', true)) : reject(fn('密码错误', false)), 2000)
+          })
+        },
+      })
+    },
 
   }
 }
@@ -163,6 +227,70 @@ export default {
 <style lang="less">
 .order-wrap {
   background-color: #cccccc;
+  .pay-wrap {
+    height: 600rpx;
+    background-color: #cccccc;
+    width: 100%;
+    .opeartion-wrap {
+      text-align: none;
+      height: 100rpx;
+      background-color: #37363b;
+      color: #ffffff;
+      font-size: 36rpx;
+      line-height: 100rpx;
+      display: flex;
+      padding: 0 34rpx;
+      .title {
+        width: 460rpx;
+      }
+    }
+    .money-wrap {
+      height: 200rpx;
+      background-color: #f5f5f5;
+      color: black;
+      font-size: 36rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .money {
+        height: 80rpx;
+        padding: 10rpx;
+        font-size: 60rpx;
+      }
+    }
+    .payee-wrap {
+      box-sizing: border-box;
+      height: 100rpx;
+      padding: 0 40rpx;
+      background-color: #ffffff;
+      border: 2rpx 0px 2rpx 0pxsolid #d7d7d7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d1d1d1;
+      font-size: 34rpx;
+      span:nth-child(2) {
+        color: black;
+      }
+    }
+    .save-wrap {
+      height: 200rpx;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .save-btn {
+        height: 100rpx;
+        width: 94%;
+        background-color: #1aac19;
+        color: #ffffff;
+        font-size: 36rpx;
+        border-radius: 6rpx;
+        text-align: center;
+        line-height: 100rpx;
+      }
+    }
+  }
   .address-box {
     background-color: #fff;
     height: 176rpx;

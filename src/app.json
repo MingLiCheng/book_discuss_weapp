@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/shop/main",
+    "pages/order/main",
     "pages/home/main",
     "pages/search/main",
-    "pages/shop/main",
     "pages/myorder/main",
     "pages/comment/main",
     "pages/commentinfo/main",
@@ -16,7 +17,6 @@
     "pages/goodsinfo/main",
     "pages/address/main",
     "pages/cart/main",
-    "pages/order/main",
     "pages/addaddress/main",
     "pages/logs/main"
   ],
