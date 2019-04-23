@@ -32,7 +32,29 @@
       />
     </div>
     <div class="goods-box">
-      <GoodsCart v-for="(cart, cartIndex) in carts" :key="cartIndex" :cart="cart"></GoodsCart>
+      <view class="goodcard-wrap">
+        <van-card
+          tag="标签"
+          :price="goodprice"
+          :desc="goodsInfo.author"
+          :title="goodsInfo.title"
+          :thumb="goodsInfo.image"
+        >
+          <view class="slot-tags" slot="tags">
+            <view class="numberinput">
+              <wux-input-number
+                color="assertive"
+                slot="footer"
+                @change="onGoodsNumChange"
+                :controlled="true"
+                :value="goodsNum"
+              />
+            </view>
+          </view>
+          <view slot="footer"></view>
+        </van-card>
+        <wux-dialog id="wux-dialog"/>
+      </view>
     </div>
     <div class="order-info-box">
       <van-cell-group>
@@ -66,34 +88,34 @@ export default {
   },
   data () {
     return {
-      carts: [],
+      goodsInfo: {},
       countPrice: '',
       openid: '',
       visible: false,
       addressId: '',
       address: '',
-      goodsId: ''
+      goodsId: '',
+      goodsNum: 1,
+      orderId: ''
+    }
+  },
+  computed: {
+    goodprice () {
+      return this.goodsInfo.goodprice ? this.goodsInfo.goodprice.toFixed(2) : 0
     }
   },
   created () {
     this.openid = wx.getStorageSync('userinfo').openId
   },
-  mounted () {
+  onShow () {
+
     wx.setNavigationBarTitle({
       title: '确认订单'
     })
     this.getAddress(false)
     // 判断是否存在goodsId
     this.goodsId = this.$root.$mp.query.goodsId
-
-    if (this.goodsId) {// 直接购买
-      this.getGoodsInfoById()
-    } else {
-      this.getCartlist()
-    }
-
-  },
-  onShow () {
+    this.getGoodsInfoById()
     this.addressId = wx.getStorageSync('addressId')
     wx.removeStorageSync('addressId')
     if (this.addressId) {
@@ -101,11 +123,25 @@ export default {
     }
   },
   methods: {
+    onGoodsNumChange (e) {
+      // 当要改变数量的时候就发送请求---->成功后 的到反馈在改变？
+      if (e.mp.detail.value === 0) {
+        // 提示是否删除该商品
+        wx.showToast({
+          title: '无法减少商品',
+          icon: 'none'
+        })
+      } else {
+        this.goodsNum = e.mp.detail.value
+      }
+      this.compentedCountPrice()
+    },
     async getGoodsInfoById () {
       const res = await getRequest('/shop/gooddetail', {
         good_id: this.goodsId
       })
-      this.carts = res.data.goodInfo
+      this.goodsInfo = res.data.goodInfo[0]
+      this.compentedCountPrice()
     },
     async getAddress (id) {
       if (!id) {
@@ -143,11 +179,7 @@ export default {
       this.createOrder()
     },
     compentedCountPrice () {
-      let count = 0
-      this.carts.forEach(v => {
-        count += v.goodprice * v.goodnum
-      })
-      this.countPrice = count * 100
+      this.countPrice = this.goodsInfo.goodprice * this.goodsNum * 100
     },
     async getCartlist () {
       getRequest('/cart/list', {
@@ -159,11 +191,13 @@ export default {
     },
     // 生成订单
     async createOrder () {
-      // 临时解决方案，传送 openid把购物车的商品全部提交，暂时不支持勾选商品
       this.showLoading()
-      const res = await postRequest('/order/create', {
-        openid: this.openid,
-        addressId: this.address.addressId
+      // 根据商品生成订单 openId, goodsNum, goodsId, goodsPrice
+      const res = await postRequest('/order/createByGoodsId', {
+        openId: this.openid,
+        goodsNum: this.goodsNum,
+        goodsId: this.goodsId,
+        goodsPrice: this.goodsInfo.goodprice
       })
       // 失败
       if (!res.data.message === 'SUCCESS') {
@@ -175,14 +209,24 @@ export default {
         })
       } else {
         // 成功
-        this.countPrice = (res.data.count).toFixed(2)
         this.hideLoading()
+        wx.showToast({
+          title: "提交订单成功",
+          icon: "success",
+          duration: 2000
+        })
+        this.countPrice = (res.data.count).toFixed(2)
+        this.orderId = res.data.order
         this.toPay()
       }
     },
     // 弹出支付接口
-    async toPay () {
-      this.visible = true
+    toPay () {
+      console.log(1);
+      setTimeout((params) => {
+        console.log('this', this)
+        this.visible = true
+      }, 1000);
     },
     // 取消支付
     canclePay () {
@@ -197,7 +241,6 @@ export default {
           url: '/pages/myorder/main'
         })
       }, 500);
-
     },
     openPlain () {
       const fn = async (title, status) => {
@@ -215,6 +258,7 @@ export default {
           })
           if (res.data.message == 'SUCCESS') {
             setTimeout(() => {
+              this.visible = false
               wx.redirectTo({
                 url: '/pages/myorder/main'
               })
@@ -224,12 +268,14 @@ export default {
               title: '发生未知错误联系管理员',
               duration: 2000,
             })
+            this.visible = false
             wx.redirectTo({
               url: '/pages/me/main'
             })
           }
         } else {
           setTimeout(() => {
+            this.visible = false
             wx.redirectTo({
               url: '/pages/myorder/main'
             })
@@ -351,6 +397,15 @@ export default {
       0 0 repeat-x #fff;
     width: 100%;
     background-color: rgb(100, 240, 119);
+    .goodcard-wrap {
+      .slot-tags {
+        display: flex;
+        justify-content: flex-end;
+        .numberinput {
+          width: 230rpx;
+        }
+      }
+    }
   }
   .order-info-box {
     padding: 20rpx 0;

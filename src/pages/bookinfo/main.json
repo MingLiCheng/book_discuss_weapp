@@ -13,6 +13,8 @@
     "wux-tabs": "../../static/wux/tabs/index",
     "wux-tab": "../../static/wux/tab/index",
     "wux-accordion-group": "../../static/wux/accordion-group/index",
-    "wux-accordion": "../../static/wux/accordion/index"
+    "wux-accordion": "../../static/wux/accordion/index",
+    "van-tab": "../../static/vant/tab/index",
+    "van-tabs": "../../static/vant/tabs/index"
   }
 }

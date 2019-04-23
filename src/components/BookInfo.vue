@@ -46,7 +46,7 @@
         </div>
       </wux-accordion>
     </wux-accordion-group>
-    <button @click="test">xxxx</button>
+    <!-- <button @click="test">xxxx</button> -->
   </div>
 </template>
 

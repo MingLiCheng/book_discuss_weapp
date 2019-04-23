@@ -31,7 +31,9 @@ export default {
   onLoad: function () {
 
     wx.connectSocket({
-      url: 'wss://c8ezbnbi.ws.qcloud.la/weapp/tunnel' // 这里是服务器的地址
+      // url: 'wss://c8ezbnbi.ws.qcloud.la/weapp/tunnel' // 这里是服务器的地址
+      // url: 'ws://localhost:5757/weapp/tunnel' // 这里是服务器的地址s
+      url :"ws://localhost:8080/"
     }),
       wx.onSocketOpen(function (res) {
         // callback

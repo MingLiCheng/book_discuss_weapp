@@ -61,13 +61,6 @@ export default {
       this.$store.dispatch('setIsLogin', false)
     }
   },
-  onLoad () {
-  },
-  onUnload () {
-    console.log('onUnload')
-  },
-  onShow () {
-  },
   mounted () {
     this.userInfo = wx.getStorageSync('userinfo')
   },
@@ -82,11 +75,11 @@ export default {
           _this.$store.dispatch('setOpenId', userinfo.openId)
           _this.userInfo = userinfo
           console.log('LoginSuccess', userinfo)
-          wx.showToast({
-            title: '授权成功',
-            icon: 'success',
-            duration: 2000
-          })
+            wx.showToast({
+              title: '授权成功',
+              icon: 'success',
+              duration: 2000
+            })
         },
         fail: function (err) {
           console.log('登录失败', err)

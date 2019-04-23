@@ -3,6 +3,7 @@
     <wux-card>
       <view slot="body" class="card-body">
           <view class="adv-fdlogo" v-if="book.adv_id">广告</view>
+          <view class="adv-fdlogo" v-if="book.recommendId">推荐</view>
           <wux-image
             wux-class="image"
             width="200rpx"

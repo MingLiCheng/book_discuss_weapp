@@ -10,7 +10,7 @@
 		"autoAudits": false
 	},
 	"miniprogramRoot": "dist/wx/",
-	"qcloudRoot": "server/",
+	"qcloudRoot": "../book_discuss_api/",
 	"compileType": "miniprogram",
 	"appid": "wx39e0a63b277cce56",
 	"projectname": "book_discuss",

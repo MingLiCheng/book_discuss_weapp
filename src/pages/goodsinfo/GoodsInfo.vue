@@ -40,13 +40,17 @@ export default {
       })
     },
     toBuy () {
-      $wuxToast().show({
-        type: 'cancel',
-        duration: 1500,
-        color: '#EA5149',
-        text: '暂时不支持，请加入购物车后结算',
-        success: () => console.log('点击直接购买')
+      // 跳转至订单页面 并携带id
+      wx.navigateTo({
+        url: '/pages/directbuy/main?goodsId='+ this.goodId
       })
+      // $wuxToast().show({
+      //   type: 'cancel',
+      //   duration: 1500,
+      //   color: '#EA5149',
+      //   text: '暂时不支持，请加入购物车后结算',
+      //   success: () => console.log('点击直接购买')
+      // })
     },
     onClickButton () {
       console.log('点击按钮');

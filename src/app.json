@@ -2,6 +2,7 @@
   "pages": [
     "pages/shop/main",
     "pages/order/main",
+    "pages/directbuy/main",
     "pages/home/main",
     "pages/search/main",
     "pages/myorder/main",

@@ -39,6 +39,7 @@ export default {
       book: {},
       page: 0,
       more: true,
+      openid:'',
     }
   },
   created () {
@@ -55,6 +56,7 @@ export default {
     }
   },
   onLoad () {
+    this.openid = wx.getStorageSync('userinfo').openId
     this.getBookList(true)
     this.getTop()
   },
@@ -99,18 +101,20 @@ export default {
         this.more = true
       }
       wx.showNavigationBarLoading()
-      const list = await Api.getRequest('/booklist', { page: this.page })
+      const list = await Api.getRequest('/booklist', { page: this.page, openid: this.openid })
       if (list.data.list.length < 10 && this.page > 0) {
         this.more = false
         console.log('this.more', this.more)
       }
       if (init) {
         this.booklist = list.data.list
+        this.booklist.push(list.data.recommends[0])
         await this.getAdvBookList()
         wx.stopPullDownRefresh()
       } else {
         // 下拉刷新，不能直接覆盖books 而是累加
         this.booklist = this.booklist.concat(list.data.list)
+        this.booklist.push(list.data.recommends[0])
       }
       wx.hideNavigationBarLoading()
     },
