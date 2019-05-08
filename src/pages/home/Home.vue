@@ -2,7 +2,8 @@
   <section class="home-wrap">
     <div class="search-bar">
       <div class="wrap" @click="onFocus">
-        <wux-icon size="19" type="ios-search" color="#B2B2B2"/><span>搜索</span>
+        <wux-icon size="19" type="ios-search" color="#B2B2B2"/>
+        <span>搜索</span>
       </div>
     </div>
     <TopSwiper :tops="tops"></TopSwiper>
@@ -39,7 +40,7 @@ export default {
       book: {},
       page: 0,
       more: true,
-      openid:'',
+      openid: '',
     }
   },
   created () {
@@ -108,13 +109,27 @@ export default {
       }
       if (init) {
         this.booklist = list.data.list
-        this.booklist.push(list.data.recommends[0])
-        await this.getAdvBookList()
+        if (list.data.recommends[0]) {
+          // this.booklist.push(list.data.recommends[0])
+          this.booklist.splice(Math.random() * this.booklist.length, 0, list.data.recommends[0])
+        }
+        if (list.data.advs[0]) {
+          this.booklist.push(list.data.advs[0])
+        }
         wx.stopPullDownRefresh()
       } else {
         // 下拉刷新，不能直接覆盖books 而是累加
+        let lengthx = this.booklist.length
         this.booklist = this.booklist.concat(list.data.list)
-        this.booklist.push(list.data.recommends[0])
+        if (list.data.recommends[0]) {
+          // 随机插入
+          this.booklist.splice(Math.random() * this.booklist.length + lengthx, 0, list.data.recommends[0])
+          // this.booklist.push(list.data.recommends[0])
+        }
+        if (list.data.advs[0]) {
+          this.booklist.push(list.data.advs[0])
+        }
+
       }
       wx.hideNavigationBarLoading()
     },
@@ -155,7 +170,7 @@ export default {
       align-items: center;
       font-size: 33rpx;
       color: rgb(170, 169, 169);
-      span{
+      span {
         margin-left: 10rpx;
       }
     }

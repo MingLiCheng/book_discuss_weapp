@@ -37,3 +37,14 @@ export function showModal (title, content) {
     showCancel: false
   })
 }
+
+export function getStorageOpenid () {
+  const openId = wx.getStorageSync('userinfo').openId
+  if (openId) {
+    return openId;
+  } else {
+    wx.navigateTo({
+      url: '/pages/me/main'
+    })
+  }
+}

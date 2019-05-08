@@ -72,7 +72,8 @@ export default {
       visible: false,
       addressId: '',
       address: '',
-      goodsId: ''
+      goodsId: '',
+      orderId:''
     }
   },
   created () {
@@ -176,6 +177,7 @@ export default {
       } else {
         // 成功
         this.countPrice = (res.data.count).toFixed(2)
+        this.orderId = res.data.order[0]
         this.hideLoading()
         this.toPay()
       }
