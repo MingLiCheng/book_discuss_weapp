@@ -4,10 +4,12 @@ export default {
   created () {
     // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.userInfo" 这个 scope
     wx.getSetting({
-      success(res) {
+      success:(res)=> {
         if (!res.authSetting['scope.userInfo']) {
         // 未授权
         console.log('未授权')
+        // wx.clearStorage()
+        // this.$store.dispatch('setIsLogin', false)
         // 授权
         }
       }

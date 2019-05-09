@@ -18,6 +18,7 @@
           lang="zh_CN"
           @getuserinfo="doLogin"
         >登录</wux-button>
+        <wux-button wux-class="user-login-btn" clear block v-if="getIsLogin" @click="setAuth">权限</wux-button>
       </div>
     </div>
     <div>
@@ -65,6 +66,31 @@ export default {
     this.userInfo = wx.getStorageSync('userinfo')
   },
   methods: {
+    setAuth () {
+      // wx.clearStorage()
+      // wx.getSetting({
+      //   success (res) {
+      //     if (!res.authSetting['scope.record']) {
+      //       wx.authorize({
+      //         scope: 'scope.record',
+      //         success () {
+      //           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+      //           wx.startRecord()
+      //         }
+      //       })
+      //     }
+      //   }
+      // })
+      wx.openSetting({
+        success (res) {
+          console.log(res.authSetting)
+        },
+        fail (res) {
+          console.log(res)
+        }
+      })
+    },
+
     doLogin () {
       qcloud.setLoginUrl(config.loginUrl)
       const _this = this
@@ -75,11 +101,11 @@ export default {
           _this.$store.dispatch('setOpenId', userinfo.openId)
           _this.userInfo = userinfo
           console.log('LoginSuccess', userinfo)
-            wx.showToast({
-              title: '授权成功',
-              icon: 'success',
-              duration: 2000
-            })
+          wx.showToast({
+            title: '授权成功',
+            icon: 'success',
+            duration: 2000
+          })
         },
         fail: function (err) {
           console.log('登录失败', err)

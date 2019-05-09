@@ -33,11 +33,38 @@
           <van-button plain hairline size="mini">更多</van-button>
           <van-button round plain hairline size="mini">查看物流</van-button>
           <van-button round plain hairline size="mini">延长收货</van-button>
-          <van-button round plain hairline type="danger" v-if="orderItem.trade_status == 0" size="mini">取消订单</van-button>
-          <van-button round plain hairline type="danger" v-if="orderItem.trade_status == 1" size="mini">提醒发货</van-button>
-          <van-button round plain hairline type="danger" v-if="orderItem.trade_status == 2" size="mini">确认收货</van-button>
-          <van-button round plain hairline type="danger" v-if="orderItem.trade_status == 3" size="mini">评价</van-button>
-
+          <van-button
+            round
+            plain
+            hairline
+            type="danger"
+            v-if="orderItem.trade_status == 0"
+            size="mini"
+          >取消订单</van-button>
+          <van-button
+            round
+            plain
+            hairline
+            type="danger"
+            v-if="orderItem.trade_status == 1"
+            size="mini"
+          >提醒发货</van-button>
+          <van-button
+            round
+            plain
+            hairline
+            type="danger"
+            v-if="orderItem.trade_status == 2"
+            size="mini"
+          >确认收货</van-button>
+          <van-button
+            round
+            plain
+            hairline
+            type="danger"
+            v-if="orderItem.trade_status == 3"
+            size="mini"
+          >评价</van-button>
         </div>
       </div>
     </div>
@@ -49,10 +76,13 @@ export default {
   data () {
     return {
       tabCurrent: 'tab',
-      orderlist: []
+      orderlist: [],
+      openId: ''
     }
   },
   onShow () {
+
+
     this.getOrderList()
   },
   computed: {
@@ -80,7 +110,7 @@ export default {
         default:
           break;
       }
-      
+
     },
     async getOrderList (trade_status) {
       const res = await postRequest('/order/list', {

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="bookinfo-wraps">
     <BookInfo :book="book"></BookInfo>
-    <div>
+    <div class="issue-list">
       <CommentCard v-for="(issue, issuesIndex) in issues" :key="issuesIndex" :commentInfo="issue"></CommentCard>
     </div>
   </div>
@@ -58,5 +58,11 @@ export default {
 .bookinfo-test {
   width: 100%;
   overflow: hidden;
+}
+.bookinfo-wraps {
+  .issue-list {
+    background-color: #e5e5e5;
+    padding: 1rpx 10rpx;
+  }
 }
 </style>

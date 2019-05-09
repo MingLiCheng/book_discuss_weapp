@@ -40,8 +40,6 @@ export default {
   },
   props: ['book'],
   mounted() {
-    console.log('xx', this.book);
-    
   },
   methods: {
     toBookInfo(){

@@ -68,6 +68,8 @@ export default {
   box-sizing: border-box;
   padding: 0px 10rpx;
   background: rgb(255, 255, 255);
+  border-radius: 6rpx;
+  overflow: hidden;
   .crad-header {
     height: 50rpx;
     display: flex;
