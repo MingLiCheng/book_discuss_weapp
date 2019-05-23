@@ -174,7 +174,8 @@ export default {
       }
     }
     .user-nickname {
-      background: rgb(126, 113, 113);
+      // background: rgb(126, 113, 113);
+      color:aliceblue;
     }
     .user-qita {
       min-width: 240rpx;

@@ -256,6 +256,7 @@ export default {
 
           return new Promise((resolve, reject) => {
             setTimeout(() => {
+              this.visible = false
               if (`${value}` == '456789') {
                 resolve(fn('密码正确', true))
               } else {

@@ -27,7 +27,7 @@
     <div class="me-module-box">
       <wux-cell-group>
         <wux-cell title="个人信息" is-link url="/pages/myinfo/main"></wux-cell>
-        <wux-cell title="个人书袋" is-link url="/pages/mybookbox/main"></wux-cell>
+        <wux-cell title="我的订单" is-link url="/pages/mybookbox/main"></wux-cell>
         <wux-cell title="我的收藏" is-link url="/pages/mycollect/main"></wux-cell>
         <wux-cell title="评论消息" is-link url="/pages/mycommentmessage/main"></wux-cell>
         <!-- <wux-cell title="评论消息" is-link url="/pages/home/main" open-type="switchTab"></wux-cell> -->

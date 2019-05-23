@@ -111,7 +111,7 @@ export default {
         },
         {
           key: "tab2",
-          title: "推荐",
+          title: "全部",
           content: "Content of tab 2"
         },
         {
