@@ -131,10 +131,9 @@ export default {
       openid: '',
     };
   },
-  created () {
+  onShow () {
     this.openid = wx.getStorageSync("userinfo").openId
-  },
-  mounted () {
+
     this.getMyIssueByCollect()
   },
   onPullDownRefresh () {

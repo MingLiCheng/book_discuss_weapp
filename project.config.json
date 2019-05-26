@@ -10,11 +10,13 @@
 		"autoAudits": false
 	},
 	"miniprogramRoot": "dist/wx/",
-	"qcloudRoot": "../book_discuss_api/",
+	"qcloudRoot": "book_discuss_api/",
 	"compileType": "miniprogram",
 	"appid": "wx39e0a63b277cce56",
 	"projectname": "book_discuss",
-	"libVersion": "2.6.5",
+	"libVersion": "2.7.0",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
