@@ -23,6 +23,7 @@
     <div v-if="more" class="no-more-msg">加载中</div>
   </section>
 </template>
+
 <script>
 import qcloud from 'wafer2-client-sdk'
 import config from '../../config.js'
@@ -57,20 +58,24 @@ export default {
     }
   },
   onLoad () {
-    this.openid = wx.getStorageSync('userinfo').openId
     this.getBookList(true)
     this.getTop()
+  },
+  onShow(){
+    this.openid = wx.getStorageSync('userinfo').openId
   },
   onPullDownRefresh () {
     this.getTop()
     this.getBookList(true)
   },
   onReachBottom () {
+    console.log('chuqi','触底')
     if (!this.more) {
       // 没有更多了
       return false
     }
     this.page = this.page + 1
+    console.log('page', this.page)
     this.getBookList()
   },
   updated () {
@@ -103,10 +108,13 @@ export default {
       }
       wx.showNavigationBarLoading()
       const list = await Api.getRequest('/booklist', { page: this.page, openid: this.openid })
-      if (list.data.list.length < 10 && this.page > 0) {
+      console.log('list',list)
+      // 如果当前页没有5个书籍 说明没有更多图书
+      if (list.data.list.length < 5 && this.page > 0) {
         this.more = false
         console.log('this.more', this.more)
       }
+
       if (init) {
         this.booklist = list.data.list
         if (list.data.recommends[0]) {
@@ -129,10 +137,10 @@ export default {
         if (list.data.advs[0]) {
           this.booklist.push(list.data.advs[0])
         }
-
       }
       wx.hideNavigationBarLoading()
     },
+    // 根据类型获取图书列表
     async getBookByType (type) {
       const list = await Api.getRequest('/book/getBooklistByType', { type })
       this.booklist = list.data.list

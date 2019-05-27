@@ -10,6 +10,7 @@
     "pages/commentinfo/main",
     "pages/newcomment/main",
     "pages/me/main",
+    "pages/editmyinfo/main",
     "pages/bookinfo/main",
     "pages/mybookbox/main",
     "pages/mycollect/main",

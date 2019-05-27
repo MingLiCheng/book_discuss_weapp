@@ -1,12 +1,10 @@
 <template>
   <section class="comment-wrap">
     <div class="top-fixed-box">
-      <div class="top-search-box">
-        <div class="search-box-a">
-          <wux-search-bar clear maxlength="8"/>
-        </div>
-        <div class="create-btn-box" @click="toNewComment">
-          <wux-icon type="ios-create" size="28" color="#0084ff"/>
+      <div class="search-bar">
+        <div class="wrap" @click="onFocus">
+          <wux-icon size="19" type="ios-search" color="#B2B2B2"/>
+          <span>搜索</span>
         </div>
       </div>
       <wux-tabs
@@ -99,7 +97,7 @@ import CommentCard from "@/components/comment/CommentCard";
 import * as Api from "../../utils/request.js";
 export default {
   components: { CommentCard },
-  data () {
+  data() {
     return {
       current: "tab1",
       index: "0",
@@ -128,25 +126,29 @@ export default {
       comments: [],
       myComments: [],
       myCollects: [],
-      openid: '',
+      openid: ""
     };
   },
-  created () {
-    this.openid = wx.getStorageSync("userinfo").openId
+  // Java,java8,编程,函数式编程,计算机,java,软件开发,开发
+  onShow() {
+    this.openid = wx.getStorageSync("userinfo").openId;
+    this.getMyIssueByCollect();
   },
-  mounted () {
-    this.getMyIssueByCollect()
-  },
-  onPullDownRefresh () {
-    this.getMyIssueByCollect()
+  onPullDownRefresh() {
+    this.getMyIssueByCollect();
   },
   methods: {
-    onTabsChange (e) {
+    onFocus(e) {
+      wx.navigateTo({
+        url: "/pages/search/main"
+      });
+    },
+    onTabsChange(e) {
       const { key } = e.mp.detail;
       this.current = key;
       this.index = this.tabs.map(n => n.key).indexOf(key);
     },
-    onSwiperChange (e) {
+    onSwiperChange(e) {
       const { current: index, source } = e.mp.detail;
       const { key } = this.tabs[index];
       if (!!source) {
@@ -155,7 +157,7 @@ export default {
       }
       switch (index) {
         case 3:
-          this.getMyComment()
+          this.getMyComment();
           break;
         case 1:
           this.getAllcomment();
@@ -165,24 +167,24 @@ export default {
           break;
       }
     },
-    async getAllcomment () {
-      const res = await Api.getRequest("/issue/list")
+    async getAllcomment() {
+      const res = await Api.getRequest("/issue/list");
       this.comments = res.data.list;
     },
-    async getMyComment () {
+    async getMyComment() {
       const res = await Api.getRequest("/issue/list", {
         openid: this.openid
       });
-      this.myComments = res.data.list
+      this.myComments = res.data.list;
     },
-    async getMyIssueByCollect () {
+    async getMyIssueByCollect() {
       const res = await Api.getRequest("/issue/collect", {
         openid: this.openid
       });
       wx.stopPullDownRefresh();
-      this.myCollects = res.data.list
+      this.myCollects = res.data.list;
     },
-    toNewComment () {
+    toNewComment() {
       wx.navigateTo({
         url: "/pages/newcomment/main"
       });
@@ -196,6 +198,31 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #efeff4;
+  .search-bar {
+    height: 88rpx;
+    padding: 16rpx 20rpx;
+    box-sizing: border-box;
+    display: flex;
+    background-color: #efeff4;
+    .wrap {
+      position: relative;
+      width: 100%;
+      height: 56rpx;
+      overflow: hidden;
+      background-color: #fff;
+      flex: 1;
+      background-clip: padding-box;
+      border-radius: 6rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 33rpx;
+      color: rgb(170, 169, 169);
+      span {
+        margin-left: 10rpx;
+      }
+    }
+  }
   .top-fixed-box {
     width: 100%;
     height: 174rpx;

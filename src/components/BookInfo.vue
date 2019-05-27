@@ -11,7 +11,7 @@
     <div class="detail flex">
       <div class="text-primary">
         <wux-rater font-size="15" max="5" controlled="true" :value="raterValue" disabled/>
-        <span>{{ book.rate }}分</span>
+        <span style="width: 65rpx;">{{ book.rate }}分</span>
       </div>
       <div v-if="book.isCollect == 0" class="collect" @click="setCollect(1)">
         <wux-icon type="ios-star-outline" color="#ea5a49" size="20"/>收藏
@@ -77,7 +77,7 @@ export default {
         openid: wx.getStorageSync('userinfo').openId,
         bookid: this.book.id
       })
-      
+
       if(res.data.message == 'SUCCESS'){
         this.book.isCollect = iscollect
       }else{

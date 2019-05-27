@@ -2,7 +2,12 @@
   <section class="shop-wrap">
     <!-- 商城首页 -->
     <div class="shop-home-wrap">
-      <wux-search-bar clear maxlength="8"/>
+      <div class="search-bar">
+        <div class="wrap" @click="onFocus">
+          <wux-icon size="19" type="ios-search" color="#B2B2B2"/>
+          <span>搜索</span>
+        </div>
+      </div>
       <div class="goods-box">
         <BookCardForShop
           v-for="(goodsItem, goodsIndex) in goodsList"
@@ -19,11 +24,10 @@
   </section>
 </template>
 <script>
-import BookCardForShop from '@/components/BookCardForShop.vue'
-import FabButton from '@/components/FabButton.vue'
-import GoodsCart from "../../components/shop/GoodsCart.vue"
-import * as Api from '../../utils/request.js'
-
+import BookCardForShop from "@/components/BookCardForShop.vue";
+import FabButton from "@/components/FabButton.vue";
+import GoodsCart from "../../components/shop/GoodsCart.vue";
+import * as Api from "../../utils/request.js";
 
 export default {
   components: { BookCardForShop, GoodsCart, FabButton },
@@ -31,53 +35,56 @@ export default {
     return {
       goodsList: [],
       page: 0,
-      more: true,
-    }
+      more: true
+    };
   },
   methods: {
+    onFocus(e) {
+      wx.navigateTo({
+        url: "/pages/search/main"
+      });
+    },
     setData(data) {
       Object.keys(data).forEach(key => {
-        this[key] = data[key]
-      })
+        this[key] = data[key];
+      });
     },
     async getGoodsList(init) {
       if (init) {
-        this.page = 0
-        this.more = true
+        this.page = 0;
+        this.more = true;
       }
-      wx.showNavigationBarLoading()
-      const list = await Api.getRequest('/shop/goodslist', { page: this.page })
+      wx.showNavigationBarLoading();
+      const list = await Api.getRequest("/shop/goodslist", { page: this.page });
 
       if (init) {
-        this.goodsList = list.data.list
+        this.goodsList = list.data.list;
         if (this.goodsList.length >= list.data.total) {
-        this.more = false
-      }
-        wx.stopPullDownRefresh()
+          this.more = false;
+        }
+        wx.stopPullDownRefresh();
       } else {
         // 下拉刷新，不能直接覆盖books 而是累加
-        this.goodsList = this.goodsList.concat(list.data.list)
+        this.goodsList = this.goodsList.concat(list.data.list);
       }
-      wx.hideNavigationBarLoading()
-
+      wx.hideNavigationBarLoading();
     }
   },
   mounted() {
-    this.getGoodsList(true)
+    this.getGoodsList(true);
   },
   onPullDownRefresh() {
-    this.getGoodsList(true)
+    this.getGoodsList(true);
   },
   onReachBottom() {
     if (!this.more) {
       // 没有更多了
-      return false
+      return false;
     }
-    this.page = this.page + 1
-    this.getGoodsList()
-  },
-
-}
+    this.page = this.page + 1;
+    this.getGoodsList();
+  }
+};
 </script>
 <style lang="less">
 .goods-box {
@@ -93,6 +100,31 @@ export default {
   bottom: 100rpx !important;
 }
 .shop-wrap {
+  .search-bar {
+    height: 88rpx;
+    padding: 16rpx 20rpx;
+    box-sizing: border-box;
+    display: flex;
+    background-color: #efeff4;
+    .wrap {
+      position: relative;
+      width: 100%;
+      height: 56rpx;
+      overflow: hidden;
+      background-color: #fff;
+      flex: 1;
+      background-clip: padding-box;
+      border-radius: 6rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 33rpx;
+      color: rgb(170, 169, 169);
+      span {
+        margin-left: 10rpx;
+      }
+    }
+  }
   .no-more-msg {
     text-align: center;
     font-size: 24rpx;
