@@ -59,7 +59,7 @@ export default {
   },
   onLoad () {
     this.getBookList(true)
-    this.getTop()
+    this.getTop();
   },
   onShow(){
     this.openid = wx.getStorageSync('userinfo').openId

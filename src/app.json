@@ -20,6 +20,7 @@
     "pages/address/main",
     "pages/cart/main",
     "pages/addaddress/main",
+    "pages/editmyinfo/main",
     "pages/logs/main"
   ],
   "permission": {

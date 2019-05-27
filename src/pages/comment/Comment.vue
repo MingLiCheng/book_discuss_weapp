@@ -129,10 +129,10 @@ export default {
       openid: ""
     };
   },
-  // Java,java8,编程,函数式编程,计算机,java,软件开发,开发
-  onShow() {
-    this.openid = wx.getStorageSync("userinfo").openId;
-    this.getMyIssueByCollect();
+  onShow () {
+    this.openid = wx.getStorageSync("userinfo").openId
+
+    this.getMyIssueByCollect()
   },
   onPullDownRefresh() {
     this.getMyIssueByCollect();
