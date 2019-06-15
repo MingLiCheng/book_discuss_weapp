@@ -6,6 +6,9 @@
           <wux-icon size="19" type="ios-search" color="#B2B2B2"/>
           <span>搜索</span>
         </div>
+         <div class="create-btn-box" @click="toNewComment">
+          <wux-icon type="ios-create" size="28" style="padding:10px;" color="#0084ff"/>
+         </div>
       </div>
       <wux-tabs
         wux-class="bordered"

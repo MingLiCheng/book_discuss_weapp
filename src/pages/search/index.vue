@@ -2,10 +2,11 @@
   <div class="search">
     <div class="head">
       <div>
-        <img
+        <!-- <img
           src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/search2-2fb94833aa.png"
           alt
-        >
+        > -->
+        <wux-icon @click="qrscannerToSearch" type="ios-qr-scanner" size="26" style="padding:5px;" color="#ccc"/>
         <input
           type="text"
           confirm-type="search"
@@ -102,6 +103,16 @@ export default {
   },
 
   methods: {
+    qrscannerToSearch(){
+      // 允许从相机和相册扫码
+      wx.scanCode({
+        success: (res) => {
+          if (res.result) {
+            this.searchWords(res.result)
+          }
+        }
+      })
+    },
     test (ex) {
       console.log('ex', ex)
     },
