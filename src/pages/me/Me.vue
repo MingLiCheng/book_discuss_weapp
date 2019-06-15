@@ -27,10 +27,9 @@
     <div class="me-module-box">
       <wux-cell-group>
         <wux-cell title="个人信息" is-link url="/pages/myinfo/main"></wux-cell>
-        <wux-cell title="我的订单" is-link url="/pages/mybookbox/main"></wux-cell>
+        <wux-cell title="我的订单" is-link url="/pages/myorder/main"></wux-cell>
         <wux-cell title="我的收藏" is-link url="/pages/mycollect/main"></wux-cell>
         <wux-cell title="评论消息" is-link url="/pages/mycommentmessage/main"></wux-cell>
-        <!-- <wux-cell title="评论消息" is-link url="/pages/home/main" open-type="switchTab"></wux-cell> -->
       </wux-cell-group>
     </div>
   </section>
@@ -49,20 +48,20 @@ export default {
       userInfo: {}
     }
   },
-  created () {
-    this.userInfo = wx.getStorageSync('userinfo')
-    // 判断用户是否的相关缓存
-    if (wx.getStorageSync('userinfo')) {
-      // 发生过授权
-      this.$store.dispatch('setIsLogin', true)
-      // wx.switchTab({
-      //   url: '/pages/me/main'
-      // })
-    } else {
-      this.$store.dispatch('setIsLogin', false)
-    }
-  },
-  mounted () {
+  // created () {
+  //   this.userInfo = wx.getStorageSync('userinfo')
+  //   // 判断用户是否的相关缓存
+  //   if (wx.getStorageSync('userinfo')) {
+  //     // 发生过授权
+  //     this.$store.dispatch('setIsLogin', true)
+  //     // wx.switchTab({
+  //     //   url: '/pages/me/main'
+  //     // })
+  //   } else {
+  //     this.$store.dispatch('setIsLogin', false)
+  //   }
+  // },
+  onShow () {
     this.userInfo = wx.getStorageSync('userinfo')
   },
   methods: {

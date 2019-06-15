@@ -66,17 +66,15 @@ export default {
   },
   onPullDownRefresh () {
     this.getTop()
-    this.getBookList(true)
+    this.getBookList(true, this.tabCurrent)
   },
   onReachBottom () {
-    console.log('chuqi','触底')
     if (!this.more) {
       // 没有更多了
       return false
     }
     this.page = this.page + 1
-    console.log('page', this.page)
-    this.getBookList()
+    this.getBookList(false, this.tabCurrent)
   },
   updated () {
   },
@@ -89,7 +87,8 @@ export default {
     onTabsChange (e) {
       this.tabCurrent = e.mp.detail.key
       if (this.tabCurrent != 'tab1') {
-        this.getBookByType(this.tabCurrent)
+        // this.getBookByType(this.tabCurrent)
+        this.getBookList(true, this.tabCurrent)
       } else {
         this.getBookList(true)
       }
@@ -101,13 +100,13 @@ export default {
       this.tops.splice(Math.floor(Math.random() * 8 + 0), 0, bookAdv.data.list[0])
       wx.stopPullDownRefresh()
     },
-    async getBookList (init) {
+    async getBookList (init,type) {
       if (init) {
         this.page = 0
         this.more = true
       }
       wx.showNavigationBarLoading()
-      const list = await Api.getRequest('/booklist', { page: this.page, openid: this.openid })
+      const list = await Api.getRequest('/booklist', { page: this.page, openid: this.openid, type: type || ''  })
       console.log('list',list)
       // 如果当前页没有5个书籍 说明没有更多图书
       if (list.data.list.length < 5 && this.page > 0) {
@@ -139,11 +138,6 @@ export default {
         }
       }
       wx.hideNavigationBarLoading()
-    },
-    // 根据类型获取图书列表
-    async getBookByType (type) {
-      const list = await Api.getRequest('/book/getBooklistByType', { type })
-      this.booklist = list.data.list
     },
     // 获取广告的列表
     async getAdvBookList () {

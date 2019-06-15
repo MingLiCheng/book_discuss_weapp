@@ -68,21 +68,26 @@
     <!--商品列表  -->
     <div v-if="listData.length!=0" class="goodsList">
       <div class="booklist-wrap">
-        <BookCard @click="test(1)" v-for="(dataItem, dataIndex) in listData" :key="dataIndex" :book="dataItem"></BookCard>
+        <BookCard
+          @click="test(1)"
+          v-for="(dataItem, dataIndex) in listData"
+          :key="dataIndex"
+          :book="dataItem"
+        ></BookCard>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getRequest, postRequest } from '@/utils/request.js'
-import BookCard from '../../components/BookCard'
+import { getRequest, postRequest } from "@/utils/request.js";
+import BookCard from "../../components/BookCard";
 export default {
-  created () { },
+  created() {},
   components: {
     BookCard
   },
-  data () {
+  data() {
     return {
       nowIndex: 0,
       words: "",
@@ -97,7 +102,7 @@ export default {
       isNew: ""
     };
   },
-  mounted () {
+  mounted() {
     this.openid = wx.getStorageSync("userinfo").openId || "";
     this.getHotData();
   },
@@ -116,37 +121,37 @@ export default {
     test (ex) {
       console.log('ex', ex)
     },
-    goodsDetail (id) {
+    goodsDetail(id) {
       wx.navigateTo({
         url: "/pages/goods/main?id=" + id
       });
     },
-    cancel () {
-      this.words = ''
+    cancel() {
+      this.words = "";
       wx.navigateBack({
         delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
       });
     },
-    clearInput () {
+    clearInput() {
       this.words = "";
       this.listData = [];
       this.tipsData = [];
     },
-    inputFocus () {
+    inputFocus() {
       //商品清空
       this.listData = [];
       //展示搜索提示信息
       this.tipsearch();
     },
-    async getlistData () {
+    async getlistData() {
       //获取商品列表
       const data = await getRequest("/search/helperaction", {
         keyword: this.words
-      })
+      });
       this.listData = data.data.keywords;
       this.tipsData = [];
     },
-    async clearHistory () {
+    async clearHistory() {
       const data = await postRequest("/search/clearhistoryAction", {
         openId: this.openid
       });
@@ -155,8 +160,8 @@ export default {
         this.historyData = [];
       }
     },
-    async searchWords (item) {
-      var vaule = item
+    async searchWords(item) {
+      var vaule = item;
       this.words = vaule || this.words;
       const data = await postRequest("/search/addhistoryaction", {
         openId: this.openid,
@@ -168,20 +173,20 @@ export default {
       //获取商品列表
       this.getlistData();
     },
-    async getHotData () {
+    async getHotData() {
       const data = await getRequest("/search/indexaction", {
         openId: this.openid
       });
-      this.hotData = data.data.hotKeywordList
+      this.hotData = data.data.hotKeywordList;
       this.historyData = data.data.historyData;
     },
-    async tipsearch (e) {
+    async tipsearch(e) {
       const data = await getRequest("/search/helperaction", {
         keyword: this.words
       });
       this.tipsData = data.data.keywords;
     },
-    topicDetail (id) {
+    topicDetail(id) {
       wx.navigateTo({
         url: "/pages/topicdetail/main?id=" + id
       });
@@ -189,7 +194,6 @@ export default {
   },
   computed: {}
 };
-
 </script>
 <style lang='less'>
 .search {
