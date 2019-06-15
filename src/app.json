@@ -12,7 +12,6 @@
     "pages/me/main",
     "pages/editmyinfo/main",
     "pages/bookinfo/main",
-    "pages/mybookbox/main",
     "pages/mycollect/main",
     "pages/mycommentmessage/main",
     "pages/myinfo/main",
@@ -20,7 +19,6 @@
     "pages/address/main",
     "pages/cart/main",
     "pages/addaddress/main",
-    "pages/editmyinfo/main",
     "pages/logs/main"
   ],
   "permission": {

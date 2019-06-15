@@ -34,7 +34,7 @@
               :key="collectIndex"
               :commentInfo="collectItem"
             ></CommentCard>
-
+            <wux-button block v-if="!getIsLogin" type="assertive" @click="toPageMe">请先登录</wux-button>
             <p id="footer-token" class="sfooter-box"></p>
           </scroll-view>
         </swiper-item>
@@ -84,7 +84,7 @@
               :key="commentIndex"
               :commentInfo="commentItem"
             ></CommentCard>
-
+            <wux-button block v-if="!getIsLogin" type="assertive" @click="toPageMe">请先登录</wux-button>
             <p id="footer-token" class="sfooter-box"></p>
           </scroll-view>
         </swiper-item>
@@ -95,6 +95,7 @@
 <script>
 import CommentCard from "@/components/comment/CommentCard";
 import * as Api from "../../utils/request.js";
+import { mapMutations, mapGetters } from "vuex";
 export default {
   components: { CommentCard },
   data() {
@@ -129,15 +130,22 @@ export default {
       openid: ""
     };
   },
-  onShow () {
-    this.openid = wx.getStorageSync("userinfo").openId
-
-    this.getMyIssueByCollect()
+  onShow() {
+    this.openid = wx.getStorageSync("userinfo").openId;
+    this.getMyIssueByCollect();
   },
   onPullDownRefresh() {
     this.getMyIssueByCollect();
   },
+  computed: {
+    ...mapGetters(["getIsLogin"])
+  },
   methods: {
+    toPageMe() {
+      wx.switchTab({
+        url: "/pages/me/main"
+      });
+    },
     onFocus(e) {
       wx.navigateTo({
         url: "/pages/search/main"

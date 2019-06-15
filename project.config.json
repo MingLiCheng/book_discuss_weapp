@@ -14,7 +14,7 @@
 	"compileType": "miniprogram",
 	"appid": "wx39e0a63b277cce56",
 	"projectname": "book_discuss",
-	"libVersion": "2.7.0",
+	"libVersion": "2.6.0",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
